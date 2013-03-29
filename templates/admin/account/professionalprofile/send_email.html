@@ -1,0 +1,210 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_static admin_modify %}
+{% load url from future %}
+{% load admin_urls account_tags %}
+
+{% block extrahead %}
+    {{ block.super }}
+	<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+	<script type="text/javascript" src="{% static 'pera/libs/angular.min.js' %}"></script>
+	<script type="text/javascript">
+		var app = angular.module('AdminRH', ['ng']);
+		app.config(['$httpProvider', '$interpolateProvider', function ($http, $interpolate) {
+			$interpolate.startSymbol('((');
+			$interpolate.endSymbol('))');
+			$http.defaults.headers.post['X-CSRFToken']      = django.jQuery('input[name=csrfmiddlewaretoken]').val();
+			$http.defaults.headers.post['action']           = 'admin_send_email';
+		}]);
+		app.run(function($rootScope){
+			$rootScope.objects      = [
+				{% for obj in queryset %}
+                    {
+                        id: {{ obj.pk }},
+                        full_name: "{{ obj.user.profile.get_full_name }}",
+                        emails: [{% for email in obj.user|get_info_flat:'email' %}'{{ email }}'{% if not forloop.last %},{% endif %}{% endfor %}]
+                    }
+					{% if not forloop.last %},{% endif %}
+				{% endfor %}
+			];
+		});
+		app.controller('SendEmailForm', function($scope, $rootScope, $http, $element){
+			function removeObject(obj, list, attr){
+				attr                = (attr || 'id');
+				if(obj[attr]){
+					for(var i in list){
+						var current     = list[i];
+						if(current[attr] == obj[attr]){
+							list.splice(i, 1);
+						}
+					}
+				}
+			}
+
+			var ids             = [];
+			$rootScope.objects.forEach(function(ob){
+				return ids.push(ob.id);
+			});
+			$scope.status                                   = 'ready';
+			$scope.attributes                               = {};
+			$scope.attributes.action                        = '{{ action_name }}';
+			$scope.attributes.{{ action_checkbox_name }}      = ids;
+			$scope.attributes.custom                = {};
+			$scope.attributes.default               = {};
+			$scope.attributes.default.subject       = '{{ default.subject|escapejs }}';
+			$scope.attributes.default.from_email    = '{{ default.from_email }}';
+			$scope.attributes.default.message       = '{{ default.message|escapejs }}';
+			$scope.customTemplate       = [];
+			$scope.remaining            = $rootScope.objects;
+			$scope.selectUser           = $scope.remaining[0];
+			$scope.addObject            = function(obj){
+				removeObject(obj, $scope.remaining);
+				$scope.selectUser                               = $scope.remaining[0];
+				$scope.attributes.custom[obj.id]                = {};
+				$scope.attributes.custom[obj.id].subject        = $scope.attributes.default.subject;
+				$scope.attributes.custom[obj.id].to             = [obj.emails[0]] || [];
+				$scope.attributes.custom[obj.id].from_email     = $scope.attributes.default.from_email;
+				$scope.attributes.custom[obj.id].message        = $scope.attributes.default.message;
+				$scope.customTemplate.push(obj);
+			};
+			$scope.removeObject            = function(obj){
+				removeObject(obj, $scope.customTemplate);
+				$scope.selectUser           = $scope.remaining[0];
+				delete($scope.attributes.custom[obj.id]);
+				$scope.remaining.push(obj);
+			};
+			$scope.submit           = function(){
+				$scope.status           = 'loading';
+				$http.post('/admin/base/professionalprofile/', this.attributes).success(function(data){
+					$scope.status           = data.status;
+                    if(data.status == 'error'){
+                        alert(data.message || 'Ocorreu um erro durante o envio');
+                    }
+				})
+			};
+			$scope.hasInTo    = function(obj, current_email){
+				var rtn             = false;
+				angular.forEach($scope.attributes.custom[obj.id].to, function(value, index){
+					if(current_email == value){
+						rtn     = true;
+					}
+				});
+				return rtn;
+			};
+		});
+		app.filter('yesno', function(){
+			return function(input, value){
+				var values          = value.split(',');
+				var rtn             = '';
+				if(values.length){
+					if(input){
+						return values[0];
+					}else{
+						if(input == null && values[2]) return values[2];
+						return values[1];
+					}
+				}
+				return input
+			}
+		})
+	</script>
+{% endblock %}
+
+{% if not is_popup %}
+	{% block breadcrumbs %}
+		<div class="breadcrumbs">
+			<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+			&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_label|capfirst|escape }}</a>
+			&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+			&rsaquo; Enviar email
+		</div>
+	{% endblock %}
+{% endif %}
+
+{% block content %}
+	<div ng-controller="SendEmailForm" ng-app="AdminRH" class="ng-scope">
+		<form ng-show="status != 'success'" ng-submit="submit()" method="post" name="formPainel" class="ng-dirty ng-valid ng-valid-required">
+			{% csrf_token %}
+			<p>Você pode customizar o template para cada usuário, para todo resto este aqui será enviado.</p>
+			<fieldset ng-init="collapsed = false" class="module aligned collapse">
+				<h2>Email Template Padrão ( <a ng-click="collapsed = !collapsed" href="" class="ng-binding">Mostrar</a> )</h2>
+				<div ng-hide="collapsed" class="fieldset-body" style="display: none;">
+					<div class="form-row">
+						<div>
+							<label for="default_subject" class="required">Subject:</label>
+							<input type="text" id="default_subject" name="default_subject" class="vTextField ng-pristine ng-valid" ng-model="attributes.default.subject">
+						</div>
+					</div>
+					<div class="form-row">
+						<div>
+							<label for="default_from_email" class="required">From Email:</label>
+							<input type="text" id="default_from_email" name="default_from_email" class="vTextField ng-pristine ng-valid" ng-model="attributes.default.from_email">
+						</div>
+					</div>
+					<div class="form-row">
+						<div>
+							<label for="default_message" class="required">Message:</label>
+							<textarea rows="10" cols="40" id="default_message" class="vLargeTextField ng-pristine ng-valid" ng-model="attributes.default.message" name="default_message"></textarea>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="inline-group">
+				<div class="add-row">
+					<select ng-options="c.full_name for c in remaining|orderBy:'full_name'" ng-model="selectUser" class="ng-valid ng-dirty"><option value="" class="">-- Selecione um usuário --</option><option value="0">teste</option><option value="1" selected="selected">trs</option></select>
+					<input type="button" value="Customizar" ng-disabled="!selectUser.emails.length" ng-click="addObject(selectUser)">
+					<span ng-hide="!selectUser || selectUser.emails.length &gt; 0" style="color: rgb(255, 0, 0); display: none;" class="error">O usuário selecionado não possui email cadastrado!</span>
+				</div>
+			</div>
+			<!-- ngRepeat: obj in customTemplate|orderBy:'full_name' -->
+
+			<div ng-include="'formEmailTemplate'" ng-repeat="obj in customTemplate|orderBy:'full_name'" class="ng-scope"></div>
+
+			<div class="submit-row">
+				<p class="deletelink-box"><a href="/admin/base/professionalprofile/">Cancelar</a></p>
+				<input type="submit" ng-disabled="status == 'loading'" value="Enviar email" class="default">
+			</div>
+		</form>
+
+		<div ng-show="status == 'success'" style="display: none;">
+			<p>Email(s) enviados com sucesso! <a href="/admin/base/professionalprofile/">Voltar para Perfis Profissionais</a></p>
+		</div>
+
+		<script id="formEmailTemplate" type="text/ng-template">
+			<form name="currentForm">
+				<fieldset class="module aligned collapse" ng-init="collapsed = false">
+					<h2>Email para (( obj.full_name )) ( <a href ng-click="collapsed = !collapsed">(( collapsed|yesno:'Mostrar,Esconder' ))</a> )<a class="deletelink" style="float: right" href ng-click="removeObject(obj)">Apagar</a></h2>
+					<div class="fieldset-body" ng-hide="collapsed">
+						<div class="form-row">
+							<div>
+								<label class="required" for="subject_(( obj.id ))">Subject:</label>
+								<input type="text" class="vTextField" name="subject_(( obj.id ))" id="subject_(( obj.id ))" value="RH - {{ site.name }}" ng-model="attributes.custom[obj.id].subject" />
+							</div>
+						</div>
+						<div class="form-row" ng-class="{errors: !attributes.custom[obj.id].to.length}">
+							<div>
+								<label class="required" for="to">To:</label>
+								<select name="to" ng-model="attributes.custom[obj.id].to" id="to" required="required" multiple="multiple" ng-change="foo = !foo">
+									<option value="(( email ))" ng-repeat="email in obj.emails" ng-selected="hasInTo(obj, email)">(( email ))</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label class="required" for="from_email_(( obj.id ))">From Email:</label>
+								<input type="text" class="vTextField" name="from_email_(( obj.id ))" id="from_email_(( obj.id ))" ng-model="attributes.custom[obj.id].from_email" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label class="required" for="message_(( obj.id ))">Message:</label>
+								<textarea name="message_(( obj.id ))" class="vLargeTextField" id="message_(( obj.id ))" cols="40" rows="10" ng-model="attributes.custom[obj.id].message"></textarea>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</script>
+	</div>
+{% endblock %}

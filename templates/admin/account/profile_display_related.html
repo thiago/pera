@@ -1,0 +1,29 @@
+{% load account_tags admin_urls %}
+{% load url from future %}
+{% with professional_profile=profile.user.professional_profile.all|first %}
+    <div class="media">
+        <div class="pull-right">
+            <small><a href="{% url opts|admin_urlname:'changelist' %}{{ profile.pk }}">Editar perfil</a></small>
+            <input type="button" class="bt-sendEmail" data-id="{{ professional_profile.pk }}" value="Enviar email" {% if not profile.user|get_info:'email' %}title="O usuário não possui email" disabled="disabled"{% endif %} />
+        </div>
+        <span class="pull-left">
+            <img class="media-object" src="{{ profile.user|get_avatar }}">
+        </span>
+        <div class="media-body">
+            <h4 class="media-heading">{{ profile.get_full_name }}</h4>
+            {% if profile.biograpy %}<p>{{ profile.biograpy|truncatewords_html:'5' }} <br></p>{% endif %}
+            {% regroup profile.user|get_info by label as info_list %}
+            <dl class="dl-horizontal">
+                {% for info in info_list %}
+                    <dt>{{ info.grouper }}</dt>
+                    <dd>
+                        {% for item in info.list %}
+                            {{ item.value }}
+                            {% if not forloop.last %}<br />{% endif %}
+                        {% endfor %}
+                    </dd>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+{% endwith %}

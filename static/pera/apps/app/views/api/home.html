@@ -1,0 +1,70 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<li class="nav-header">Sidebar</li>
+					<li class="active"><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li class="nav-header">Sidebar</li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li class="nav-header">Sidebar</li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="span10" >
+			<input type="text" ng-model="option.list" />
+			<select name="version" ng-model="version" ng-options="c for c in versions"></select>
+			<select name="options" ng-model="option" ng-options="c.name for c in options"></select>
+			<div class="subhead"><h1>(( option.name ))</h1></div>
+			<div ng-init="showPOST = false">
+				<a href ng-click="showPOST = !showPOST">Exibir POST</a>
+				<form class="form-horizontal" ng-show="showPOST" ng-submit="" ng-init="form = {}">
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div ng-init="showJSON = false">
+				<a href ng-click="showJSON = !showJSON">Exibir JSON</a>
+				<pre ng-model="code" ng-bind="data | json" ng-show="showJSON"></pre>
+			</div>
+			<table class="table table-bordered table-striped table-hover table-white">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th ng-repeat="attr in fieldAttrs">(( attr ))</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="(field, fieldData) in data.fields">
+					<td>(( field ))</td>
+					<td ng-repeat="attr in fieldAttrs">
+						<span ui-if="!_.isBoolean(fieldData[attr]) && fieldData[attr] && attr != 'choices'">(( fieldData[attr] ))</span>
+						<ul ui-if="attr == 'choices'" class="unstyled">
+							<li ng-repeat="choice in fieldData[attr]" >
+								<b data-original-title="(( choice[1] ))" ui-jq="tooltip" ui-options="{placement: 'right'}">(( choice[0] ))</b>
+							</li>
+						</ul>
+						<img class="icon-ok" ui-if="_.isBoolean(fieldData[attr]) && fieldData[attr] == true" />
+						<img class="icon-remove" ui-if="_.isBoolean(fieldData[attr]) && fieldData[attr] == false" />
+						<img class="icon-ban-circle" ui-if="!_.isBoolean(fieldData[attr]) && !fieldData[attr]" />
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

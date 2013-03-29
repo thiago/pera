@@ -1,0 +1,33 @@
+.pull-left{float: left;}
+.pull-right{float: right;}
+
+.media, .media-body {
+    overflow: hidden;
+    *overflow: visible;
+    zoom: 1;
+}
+
+.media, .media .media {
+    margin-top: 15px;
+}
+
+.media:first-child {
+    margin-top: 0;
+}
+
+.media-object {
+    display: block;
+}
+
+.media-heading {
+    margin: 0 0 5px;
+}
+
+.media > .pull-left {}
+.media > .pull-right {}
+.media-list {
+    margin-left: 0;
+    list-style: none;
+}
+
+#changelist-form .media-object{width: 50px; height: 50px;}

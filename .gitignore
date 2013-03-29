@@ -1,0 +1,7 @@
+.idea
+project.db
+local_settings.py
+*.pyc
+media/cache
+media/account
+._*

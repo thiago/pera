@@ -1,0 +1,314 @@
+[
+	{
+		"pk": 2,
+		"model": "auth.user",
+		"fields": {
+			"username": "roberto",
+			"first_name": "Roberto",
+			"last_name": "Assis",
+			"is_active": true,
+			"is_superuser": false,
+			"is_staff": false,
+			"last_login": "2013-03-22T02:24:50Z",
+			"groups": [],
+			"user_permissions": [],
+			"password": "pbkdf2_sha256$10000$D1cK1O8lx0fE$2Hp/jVqSygjZZzQ74ZZKlN/oCODiNTgK2eNktCF9IXA=",
+			"email": "roberto@example.com",
+			"date_joined": "2013-03-22T02:24:50Z"
+		}
+	},
+	{
+		"pk": 3,
+		"model": "auth.user",
+		"fields": {
+			"username": "carlos",
+			"first_name": "Carlos",
+			"last_name": "Silva",
+			"is_active": true,
+			"is_superuser": false,
+			"is_staff": false,
+			"last_login": "2013-03-22T02:25:19Z",
+			"groups": [],
+			"user_permissions": [],
+			"password": "pbkdf2_sha256$10000$J36EUqV1QIjX$TQfvOWeyR63fIfb2mSqE3DgzL+juIrkwWhhr1ctG3Dk=",
+			"email": "carlos@example.com",
+			"date_joined": "2013-03-22T02:25:19Z"
+		}
+	},
+	{
+		"pk": 4,
+		"model": "auth.user",
+		"fields": {
+			"username": "pedro",
+			"first_name": "Pedro",
+			"last_name": "Souza",
+			"is_active": true,
+			"is_superuser": false,
+			"is_staff": false,
+			"last_login": "2013-03-22T02:25:50Z",
+			"groups": [],
+			"user_permissions": [],
+			"password": "pbkdf2_sha256$10000$82p1HxEEEjxE$ZLZYoKT8CICSMZh6RxAWCsmJH2uVbddJOjmyxPiBaa8=",
+			"email": "pedro@example.com",
+			"date_joined": "2013-03-22T02:25:50Z"
+		}
+	},
+	{
+		"pk": 5,
+		"model": "auth.user",
+		"fields": {
+			"username": "mara",
+			"first_name": "Mara",
+			"last_name": "Pereira",
+			"is_active": true,
+			"is_superuser": false,
+			"is_staff": false,
+			"last_login": "2013-03-22T02:31:24Z",
+			"groups": [],
+			"user_permissions": [],
+			"password": "pbkdf2_sha256$10000$lGmNAF1I3z2d$1aygn4vO1NXGrMgCGYH9iGF+5BN7bTMg66efCe2kQPA=",
+			"email": "",
+			"date_joined": "2013-03-22T02:31:24Z"
+		}
+	},
+   {
+      "pk": 2,
+      "model": "account.userprofile",
+      "fields": {
+         "birth_date": null,
+         "picture": "",
+         "user": 2,
+         "biography": "",
+         "sites": [
+            1
+         ]
+      }
+   },
+   {
+      "pk": 3,
+      "model": "account.userprofile",
+      "fields": {
+         "birth_date": null,
+         "picture": "",
+         "user": 3,
+         "biography": "",
+         "sites": [
+            1
+         ]
+      }
+   },
+   {
+      "pk": 4,
+      "model": "account.userprofile",
+      "fields": {
+         "birth_date": null,
+         "picture": "",
+         "user": 4,
+         "biography": null,
+         "sites": [
+            1
+         ]
+      }
+   },
+   {
+      "pk": 5,
+      "model": "account.userprofile",
+      "fields": {
+         "birth_date": null,
+         "picture": "",
+         "user": 5,
+         "biography": null,
+         "sites": [
+            1
+         ]
+      }
+   },
+   {
+      "pk": 3,
+      "model": "account.userinfoattr",
+      "fields": {
+         "key": "celular",
+         "label": "Celular"
+      }
+   },
+   {
+      "pk": 2,
+      "model": "account.userinfoattr",
+      "fields": {
+         "key": "email",
+         "label": "Email"
+      }
+   },
+   {
+      "pk": 4,
+      "model": "account.userinfoattr",
+      "fields": {
+         "key": "ramal",
+         "label": "Ramal"
+      }
+   },
+   {
+      "pk": 1,
+      "model": "account.userinfoattr",
+      "fields": {
+         "key": "telefone",
+         "label": "Telefone"
+      }
+   },
+   {
+      "pk": 1,
+      "model": "account.userinfo",
+      "fields": {
+         "user": 2,
+         "order": 0,
+         "value": "(22) 2623-0000",
+         "label": 3
+      }
+   },
+   {
+      "pk": 2,
+      "model": "account.userinfo",
+      "fields": {
+         "user": 2,
+         "order": 10,
+         "value": "6271",
+         "label": 4
+      }
+   },
+   {
+      "pk": 3,
+      "model": "account.userinfo",
+      "fields": {
+         "user": 3,
+         "order": 0,
+         "value": "2255-8765",
+         "label": 1
+      }
+   },
+	{
+		"pk": 1,
+		"model": "account.department",
+		"fields": {
+			"description": "",
+			"name": "Recursos Humanos",
+			"slug": "rh"
+		}
+	},
+	{
+		"pk": 2,
+		"model": "account.department",
+		"fields": {
+			"description": "",
+			"name": "Marketing",
+			"slug": "marketing"
+		}
+	},
+	{
+		"pk": 3,
+		"model": "account.department",
+		"fields": {
+			"description": "",
+			"name": "Comercial",
+			"slug": "comercial"
+		}
+	},
+	{
+		"pk": 4,
+		"model": "account.department",
+		"fields": {
+			"description": "",
+			"name": "TI",
+			"slug": "ti"
+		}
+	},
+	{
+		"pk": 5,
+		"model": "account.department",
+		"fields": {
+			"description": "",
+			"name": "Fianceiro",
+			"slug": "fianceiro"
+		}
+	},
+	{
+		"pk": 1,
+		"model": "account.role",
+		"fields": {
+			"description": "",
+			"name": "Desenvolvedor",
+			"slug": "desenvolvedor"
+		}
+	},
+	{
+		"pk": 2,
+		"model": "account.role",
+		"fields": {
+			"description": "",
+			"name": "Designer",
+			"slug": "designer"
+		}
+	},
+	{
+		"pk": 3,
+		"model": "account.role",
+		"fields": {
+			"description": "",
+			"name": "Coordenador",
+			"slug": "coordenador"
+		}
+	},
+	{
+		"pk": 4,
+		"model": "account.role",
+		"fields": {
+			"description": "",
+			"name": "Gerente",
+			"slug": "gerente"
+		}
+	},
+	{
+		"pk": 5,
+		"model": "account.role",
+		"fields": {
+			"description": "",
+			"name": "Analista",
+			"slug": "analista"
+		}
+	},
+	{
+		"pk": 1,
+		"model": "account.professionalprofile",
+		"fields": {
+			"department": 1,
+			"role": 3,
+			"user": 3
+		}
+	},
+	{
+		"pk": 2,
+		"model": "account.professionalprofile",
+		"fields": {
+			"department": 2,
+			"role": 4,
+			"user": 2
+		}
+	},
+	{
+		"pk": 3,
+		"model": "account.professionalprofile",
+		"fields": {
+			"department": 5,
+			"role": 5,
+			"user": 4
+		}
+	},
+	{
+		"pk": 4,
+		"model": "account.professionalprofile",
+		"fields": {
+			"department": 1,
+			"role": 4,
+			"user": 5
+		}
+	}
+]

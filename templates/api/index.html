@@ -1,0 +1,121 @@
+{% load compress %}
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>Api Explorer</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}trs/assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}trs/assets/vendor/jQueryUI/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}trs/assets/vendor/select2/select2.css" />
+		{% compress css %}
+		<style type="text/less">
+		  body {
+			padding-top: 100px;
+			padding-bottom: 40px;
+			background-color: #fcfcfc;
+		  }
+		  .sidebar-nav {
+			padding: 9px 0;
+		  }
+		  .navbar.primary{
+			  padding-top: 6px;
+			  padding-bottom: 6px;
+			  background-color: #ffffff;
+			  margin: 0;
+			  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+			  border-bottom: 1px solid #dddddd;
+		  }
+		  .navbar.secondary{
+		      margin-bottom: 0;
+		      margin: 0 10px;
+		      .navbar-inner{
+			      min-height: 26px;
+			      border-radius: 0 0 5px 5px;
+			      background-color: #333333;
+		      }
+			  .nav{
+				  a{
+					 line-height: 14px;
+					 font-size: 11px;
+					 padding-top: 6px ;
+					 padding-bottom: 6px ;
+				  }
+			  }
+		  }
+		  .table-white{
+			  background-color: #ffffff;
+		  }
+		  @media (max-width: 980px) {
+			/* Enable use of floated navbar text */
+			.navbar-text.pull-right {
+			  float: none;
+			  padding-left: 5px;
+			  padding-right: 5px;
+			}
+		  }
+		</style>
+		{% endcompress %}
+	</head>
+	<body>
+		<!--[if lt IE 7]>
+			<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="{{ STATIC_URL }}trs/assets/vendor/es5-shim/es5-shim.js"></script>
+			<script src="{{ STATIC_URL }}trs/assets/vendor/json3/lib/json3.min.js"></script>
+            <script src="{{ STATIC_URL }}trs/assets/vendor/angular-ui/build/angular-ui-ieshiv.js"></script>
+        <![endif]-->
+
+        <div id="page-wrapper" ng-class="status">
+	        <div class="navbar-fixed-top" ng-controller="Navbar">
+                <div class="navbar primary container-fluid">
+                    <a class="brand" href="#">Api Explorer</a>
+                    <form class="navbar-form pull-left" ng-submit="">
+                        <div class="input-prepend input-append btn-group">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">(( currentMethod )) <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="method in $route.current.scope.data.allowed_detail_http_methods" ng-class="{active: method == activeMethod()}" ng-click="activeMethod(method)">(( method | uppercase ))</li>
+                            </ul>
+                            <input type="text" ng-model="currentUrl" placeholder="digite o nome do grupo..." class="span6" ui-keypress="{13:'doGet(currentUrl)'}">
+                            <button class="btn btn-primary">Submit</button>
+                        </div><!-- /input-prepend input-append -->
+                    </form>
+                </div>
+		        <div class="navbar secondary navbar-inverse hide">
+			        <div class="navbar-inner">
+				        <div class="container-fluid">
+					        <div class="nav-collapse collapse">
+						        <ul class="nav">
+							        <li class="active"><a href="#">Home</a></li>
+							        <li><a href="#about">About</a></li>
+							        <li><a href="#contact">Contact</a></li>
+						        </ul>
+					        </div>
+				        </div>
+			        </div>
+		        </div>
+	        </div>
+            <div id="page" ng-view></div>
+        </div>
+		<script data-main="{{ STATIC_URL }}apps/app/scripts/apps/api/main" src="{{ STATIC_URL }}apps/app/components/requirejs/require.js"></script>
+
+		<script type="text/ng-template" id="views/partials/modalAdd.html">
+			<form class="form-horizontal" ng-submit="" ng-init="form = {}">
+				<div ng-include="'views/partials/fields.html'"></div>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</form>
+		</script>
+		<div id="modalAddRelated" ng-include="'views/partials/modalAdd.html'" style="display: none"></div>
+	</body>
+</html>

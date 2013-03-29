@@ -1,0 +1,74 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="components/es5-shim/es5-shim.js"></script>
+      <script src="components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <div class="nav-bar">aqui nao sei se sdf</div>
+    <div class="container" ng-view></div>
+
+    <script data-main="scripts/apps/api/main" src="components/requirejs/require.js"></script>
+
+    <script type="text/ng-template" id="views/partials/fields.html">
+	    <div ng-repeat="(field, fieldData) in data.fields" >
+		    <div class="control-group" ui-if="!fieldData.readonly && field != 'id'">
+			    <label class="control-label" for="(( field ))" ui-if="fieldData.blank && fieldData.nullable">(( field ))</label>
+			    <label class="control-label" for="(( field ))" ui-if="!fieldData.blank || !fieldData.nullable"><b>(( field ))</b></label>
+			    <div class="controls">
+				    <select ng-model="form[field]" ng-options="(c.name || c.title || c.username || c.label || c.id ) for c in root.relateds[field]" ng-init="get(fieldData.list_endpoint, field)" ui-if="fieldData.related_type == 'to_one'" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+					    <option value="" ui-if="fieldData.blank && fieldData.nullable">-- selecione (( field )) --</option>
+				    </select>
+				    <select ng-model="form[field]" ng-options="(c.name || c.title || c.username || c.label || c.id ) for c in root.relateds[field]" ng-init="get(fieldData.list_endpoint, field)" ui-if="fieldData.related_type == 'to_many'" multiple="" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+					    <option value="" ui-if="fieldData.blank && fieldData.nullable">-- selecione (( field )) --</option>
+				    </select>
+				    <select ng-model="form[field]" ng-options="c[0] as c[1] for c in fieldData.choices" ui-if="fieldData.choices" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+					    <option value="" ui-if="fieldData.blank && fieldData.nullable">-- selecione (( field )) --</option>
+				    </select>
+				    <input type="checkbox" id="(( field ))" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="fieldData.type == 'boolean' && !fieldData.related_type" ng-model="form[field]" />
+				    <input type="text" id="(( field ))" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="!fieldData.related_type && !fieldData.choices && (fieldData.type == 'string' || fieldData.type == 'related')" ng-model="form[field]" />
+				    <input type="text" id="(( field ))" placeholder="dd/mm/yyyy" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="!fieldData.related_type && fieldData.type == 'date' || fieldData.type == 'datetime'" ui-date  ng-model="form[field]" />
+
+				    <a href class="help-inline" ui-if="fieldData.related_type" ng-click="addRelated(fieldData)" ><span class="icon-plus-sign"></span> Novo</a>
+			    </div>
+		    </div>
+	    </div>
+    </script>
+    <script type="text/ng-template" id="views/partials/modalAdd.html">
+	    <form class="form-horizontal" ng-submit="" ng-init="form = {}">
+		    <div ng-include="'views/partials/fields.html'"></div>
+		    <div class="control-group">
+			    <div class="controls">
+				    <button type="submit" class="btn btn-primary">Salvar</button>
+			    </div>
+		    </div>
+	    </form>
+    </script>
+    <div id="modalAddRelated" ng-include="'views/partials/modalAdd.html'"></div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!--script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script-->
+  </body>
+</html>

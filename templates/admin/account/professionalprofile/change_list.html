@@ -1,0 +1,21 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static admin_list %}
+{% load url from future %}
+{% load admin_urls %}
+
+{% block extrahead %}
+  {{ block.super }}
+	<script type="text/javascript">
+		(function($) {
+			$(document).ready(function($) {
+				$(".bt-sendEmail").click(function(){
+					var id              = $(this).attr('data-id');
+					$('select[name="action"]').val('admin_send_email');
+					$('input[name="_selected_action"][type="checkbox"]').removeAttr('checked');
+					$('input[name="_selected_action"][type="checkbox"][value="' + id + '"]').attr('checked','checked');
+					$("#changelist-form").submit();
+				});
+			});
+		})(django.jQuery);
+	</script>
+{% endblock %}

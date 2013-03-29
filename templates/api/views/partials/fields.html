@@ -1,0 +1,22 @@
+<div ng-repeat="(field, fieldData) in data.fields | orderBy:field" >
+	<div class="control-group" ui-if="!fieldData.readonly && field != 'id'">
+		<label class="control-label" for="(( field ))" ui-if="fieldData.blank && fieldData.nullable">(( field ))</label>
+		<label class="control-label" for="(( field ))" ui-if="!fieldData.blank || !fieldData.nullable"><b>(( field ))</b></label>
+		<div class="controls">
+			<select class="input-block-level" data-placeholder="-- selecione (( field )) --" ui-select2="{allowClear: (fieldData.blank && fieldData.nullable)}" ng-model="form[field]" ng-init="get(fieldData.list_endpoint, field)" ui-if="fieldData.related_type == 'to_one'" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+				<option ng-repeat="c in root.relateds[field]" value="c.id">((c.name || c.title || c.username || c.label || c.id ))</option>
+			</select>
+			<select class="input-block-level" data-placeholder="-- selecione (( field )) --" ui-select2="{allowClear: (fieldData.blank && fieldData.nullable)}" ng-model="form[field]" ng-init="get(fieldData.list_endpoint, field)" ui-if="fieldData.related_type == 'to_many'" multiple="" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+				<option ng-repeat="c in root.relateds[field]" value="c.id">((c.name || c.title || c.username || c.label || c.id ))</option>
+			</select>
+			<select class="input-block-level" ng-model="form[field]" ng-options="c[0] as c[1] for c in fieldData.choices" ui-if="fieldData.choices" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}">
+				<option value="" ui-if="fieldData.blank && fieldData.nullable">-- selecione (( field )) --</option>
+			</select>
+			<input class="input-block-level" type="checkbox" id="(( field ))" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="fieldData.type == 'boolean' && !fieldData.related_type" ng-model="form[field]" />
+			<input class="input-block-level" type="text" id="(( field ))" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="!fieldData.related_type && !fieldData.choices && (fieldData.type == 'string' || fieldData.type == 'related')" ng-model="form[field]" />
+			<input class="input-block-level" type="text" id="(( field ))" placeholder="dd/mm/yyyy" data-original-title="(( fieldData.help_text ))" data-toggle="tooltip" ui-options="{placement: 'right'}" ui-if="!fieldData.related_type && fieldData.type == 'date' || fieldData.type == 'datetime'" ui-date  ng-model="form[field]" />
+
+			<a href class="help-inline" ui-if="fieldData.related_type" ng-click="addRelated(fieldData)" ><span class="icon-plus-sign"></span> Novo</a>
+		</div>
+	</div>
+</div>
