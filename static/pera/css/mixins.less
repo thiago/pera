@@ -1,0 +1,140 @@
+/* mixins.less
+ * Snippets of reusable CSS to develop faster and keep code readable
+ * ----------------------------------------------------------------- */
+
+// Clearfix for clearing floats like a boss h5bp.com/q
+.clearfix() {
+    zoom: 1;
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+        zoom: 1;
+        *display: inline;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.relativeFont(@size: @base_font_size) {
+    font-size: 1em * @size / @base_font_size;
+}
+
+// Border Radius
+.borderRadius(@radius: 5px) {
+    -webkit-border-radius: @radius;
+       -moz-border-radius: @radius;
+            border-radius: @radius;
+}
+
+// Drop shadows
+.boxShadow(@shadow: 0 1px 3px rgba(0,0,0,.25)) {
+    -webkit-box-shadow: @shadow;
+       -moz-box-shadow: @shadow;
+            box-shadow: @shadow;
+}
+
+// Defines user selection
+.userSelect(@val: none) {
+  -webkit-user-select: @val;
+   -khtml-user-select: @val;
+     -moz-user-select: @val;
+       -o-user-select: @val;
+          user-select: @val;
+}
+
+// Background clipping
+.backgroundClip(@clip) {
+    -webkit-background-clip: @clip;
+       -moz-background-clip: @clip;
+            background-clip: @clip;
+}
+
+// Gradients
+#Gradient {
+    .horizontal (@start_color: #555, @end_color: #333) {
+        background-color: @end_color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, right top, from(@start_color), to(@end_color)); // Konqueror
+        background-image: -moz-linear-gradient(left, @start_color, @end_color); // FF 3.6+
+        background-image: -ms-linear-gradient(left, @start_color, @end_color); // IE10
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start_color), color-stop(100%, @end_color)); // Safari 4+, Chrome 2+
+        background-image: -webkit-linear-gradient(left, @start_color, @end_color); // Safari 5.1+, Chrome 10+
+        background-image: -o-linear-gradient(left, @start_color, @end_color); // Opera 11.10
+        background-image: linear-gradient(left, @start_color, @end_color); // Le standard
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start_color,@end_color)); // IE9 and down
+    }
+    .vertical (@start_color: #555, @end_color: #333) {
+        background-color: @end_color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(@start_color), to(@end_color)); // Konqueror
+        background-image: -moz-linear-gradient(top, @start_color, @end_color); // FF 3.6+
+        background-image: -ms-linear-gradient(top, @start_color, @end_color); // IE10
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start_color), color-stop(100%, @end_color)); // Safari 4+, Chrome 2+
+        background-image: -webkit-linear-gradient(top, @start_color, @end_color); // Safari 5.1+, Chrome 10+
+        background-image: -o-linear-gradient(top, @start_color, @end_color); // Opera 11.10
+        background-image: linear-gradient(top, @start_color, @end_color); // The standard
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start_color,@end_color)); // IE9 and down
+    }
+    .directional (@start_color: #555, @end_color: #333, @deg: 45deg) {
+        background-color: @end_color;
+        background-repeat: repeat-x;
+        background-image: -moz-linear-gradient(@deg, @start_color, @end_color); // FF 3.6+
+        background-image: -ms-linear-gradient(@deg, @start_color, @end_color); // IE10
+        background-image: -webkit-linear-gradient(@deg, @start_color, @end_color); // Safari 5.1+, Chrome 10+
+        background-image: -o-linear-gradient(@deg, @start_color, @end_color); // Opera 11.10
+        background-image: linear-gradient(@deg, @start_color, @end_color); // The standard
+    }
+    .verticalThreeColors(@start_color: #00b3ee, @mid_color: #7a43b6, @color_stop: 50%, @end_color: #c3325f) {
+        background-color: @end_color;
+        background-repeat: no-repeat;
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@start_color), color-stop(@color_stop, @mid_color), to(@end_color));
+        background-image: -webkit-linear-gradient(@start_color, @mid_color @color_stop, @end_color);
+        background-image: -moz-linear-gradient(top, @start_color, @mid_color @color_stop, @end_color);
+        background-image: -ms-linear-gradient(@start_color, @mid_color @color_stop, @end_color);
+        background-image: -o-linear-gradient(@start_color, @mid_color @color_stop, @end_color);
+        background-image: linear-gradient(@start_color, @mid_color @color_stop, @end_color);
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start_color,@end_color)); // IE9 and down, gets no color-stop at all for proper fallback
+    }
+}
+
+// CSS3 Flexbox
+.flexbox(@orient: horizontal) {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -o-box;
+    display: box;
+
+    -webkit-box-orient: @orient;
+       -moz-box-orient: @orient;
+            box-orient: @orient;
+}
+
+.flex(@flex: 1) {
+    -webkit-flex-box: @flex;
+       -moz-flex-box: @flex;
+         -o-flex-box: @flex;
+            flex-box: @flex;
+}
+
+// Reset filters for IE
+.resetFilter() {
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
+}
+
+// Opacity
+.opacity(@opacity: 100) {
+    filter: e(%("alpha(opacity=%d)", @opacity));
+    -khtml-opacity: @opacity / 100;
+      -moz-opacity: @opacity / 100;
+           opacity: @opacity / 100;
+}
+
+// Hiding text for image replacement
+// http://www.zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement/
+.hideText() {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}

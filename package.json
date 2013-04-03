@@ -1,0 +1,15 @@
+{
+    "name": "pera",
+    "description": "",
+    "version": "0.0.0",
+    "author": "Thiago Rodrigues",
+    "devDependencies": {
+        "bower": "latest",
+        "grunt": "latest",
+	      "grunt-contrib-requirejs": "*",
+	      "grunt-clean": "*"
+    },
+    "scripts": {
+        "setup": "npm install && bower install --force-latest"
+    }
+}

@@ -1,3 +1,5 @@
 django
+sqlite3
 sorl-thumbnail
 django-autocomplete
+django_compressor

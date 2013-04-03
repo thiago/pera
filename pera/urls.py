@@ -9,6 +9,7 @@ from autocomplete.views import autocomplete
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                       url(r'^$', 'pera.views.home', name='home'),
                        url(r'^admin/', include(admin.site.urls)),
-                       url('^autocomplete/', include(autocomplete.urls))
+                       url(r'^autocomplete/', include(autocomplete.urls))
                        ) + staticfiles_urlpatterns() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,10 @@
 .idea
+media/cache
+media/account
+static/components
+static/compiled
+node_modules
 project.db
 local_settings.py
 *.pyc
-media/cache
-media/account
 ._*

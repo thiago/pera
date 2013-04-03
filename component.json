@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "dependencies": {
+	  "angular": "latest",
+	  "angular-cookies": "latest",
+	  "angular-resource": "latest",
+	  "angular-sanitize": "latest",
+	  "angular-ui": "latest",
+	  "backbone": "latest",
+	  "backbone.localStorage": "latest",
+	  "bootstrap": "latest",
+	  "es5-shim": "latest",
+	  "jquery": "latest",
+	  "jquery-ui": "latest",
+	  "json3": "latest",
+	  "layoutmanager": "latest",
+	  "lodash": "latest",
+	  "moment": "latest",
+	  "requirejs": "latest",
+	  "requirejs-text": "latest",
+	  "select2": "latest"
+  },
+  "devDependencies": {
+    "angular-mocks": "latest",
+    "angular-scenario": "latest"
+  }
+}
