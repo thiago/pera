@@ -218,17 +218,12 @@ class Note(models.Model):
         verbose_name_plural = 'Notas'
 
 
-#def create_user_profile(sender, instance, created, **kwargs):
-#    if created:
-#        user = ProfessionalProfile.objects.get_or_create(user=instance)[0]
-#        try:
-#            user.sites.add(Site.objects.get_current())
-#            user.save()
-#        except:
-#            pass
-#
-#post_save.connect(create_user_profile, sender=User)
-#User.profile = property(
-#    lambda u: ProfessionalProfile.objects.get_or_create(
-#        user=u)[
-#              0])
+def get_professional_profile(user):
+    rtn = None
+    try:
+        rtn = ProfessionalProfile.objects.get(user=user)
+    except ProfessionalProfile.DoesNotExist:
+        pass
+    return rtn
+
+User.professional_profile = property(lambda u: get_professional_profile(u))

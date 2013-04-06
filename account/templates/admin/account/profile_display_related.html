@@ -1,6 +1,6 @@
 {% load account_tags admin_urls %}
 {% load url from future %}
-{% with professional_profile=profile.user.professional_profile.all|first %}
+{% with professional_profile=profile.user.professional_profile %}
     <div class="media">
         <div class="pull-right">
             <small><a href="{% url opts|admin_urlname:'changelist' %}{{ profile.pk }}">Editar perfil</a></small>

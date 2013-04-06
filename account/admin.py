@@ -161,7 +161,7 @@ class ProfessionalProfileAdmin(AutocompleteAdmin, admin.ModelAdmin):
 
             return HttpResponse(json.dumps(response_data), mimetype="application/json")
 
-        return TemplateResponse(request, 'admin/base/professionalprofile/send_email.html', context, current_app=self.admin_site.name)
+        return TemplateResponse(request, 'admin/account/professionalprofile/send_email.html', context, current_app=self.admin_site.name)
     admin_send_email.short_description = "Enviar Email(s)"
 
 

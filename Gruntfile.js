@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     var config = require('./static/config'),
         spawn = require('child_process').spawn;
 
-    grunt.loadNpmTasks('grunt-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
     //grunt.loadNpmTasks('grunt-clean');
 
 		//require('matchdep').filterDev('grunt-*').concat(['gruntacular']).forEach(grunt.loadNpmTasks);

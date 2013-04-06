@@ -8,7 +8,7 @@ ACCOUNT_DEFAULT_IMG_PROFILE = getattr(
     settings,
     'ACCOUNT_DEFAULT_IMG_PROFILE',
     'defaults/account/user.jpg')
-ACCOUNT_SIZES = getattr(settings, 'ACCOUNT_SIZES', {
+ACCOUNT_SIZES = getattr(settings, 'ACCOUNT_AVATAR_SIZES', {
     'square'					: (50, 50),
     'small'						: (50, 0),
     'normal'					: (100, 0),

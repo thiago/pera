@@ -127,6 +127,6 @@ LOGGING = {
 }
 
 try:
-    from local_settings import *
+    from pera.local_settings import *
 except ImportError:
     pass
