@@ -1,4 +1,7 @@
 django
+feincms
 sorl-thumbnail
+django-admin-tools
 django-autocomplete
-django_compressor
+django-compressor
+django-debug-toolbar

@@ -2,6 +2,7 @@
 media/*
 !media/defaults
 static/components
+static/compiled
 node_modules
 project.db
 *.pyc

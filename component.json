@@ -1,33 +1,8 @@
 {
-  "name": "api",
+  "name": "pera",
   "version": "0.0.0",
   "dependencies": {
-	  "angular": "latest",
-	  "angular-cookies": "latest",
-	  "angular-resource": "latest",
-	  "angular-sanitize": "latest",
-	  "angular-ui": "latest",
-	  "backbone": "latest",
-	  "backbone.localStorage": "latest",
-	  "backbone-forms": "latest",
-	  "backbone.paginator": "latest",
-	  "backbone-tastypie": "latest",
-	  "backbone.iobind": "latest",
-	  "bootstrap": "latest",
-	  "es5-shim": "latest",
-	  "fancybox": "latest",
-	  "jquery": "latest",
-	  "jquery-ui": "latest",
-	  "json3": "latest",
-	  "layoutmanager": "latest",
-	  "lodash": "latest",
-	  "moment": "latest",
-	  "requirejs": "latest",
-	  "requirejs-text": "latest",
-	  "select2": "latest"
-  },
-  "devDependencies": {
-    "angular-mocks": "latest",
-    "angular-scenario": "latest"
+
+	  "tinymce": "https://github.com/trsouz/tinymce.git"
   }
 }

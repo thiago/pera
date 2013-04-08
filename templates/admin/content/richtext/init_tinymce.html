@@ -1,0 +1,116 @@
+{% block tinymce_script %}
+    {% if TINYMCE_JS_URL %}
+        <script type="text/javascript" src="{{ TINYMCE_JS_URL }}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block tinymce_init %}
+    <script type="text/javascript">
+        {% block functions %}{% endblock %}
+        function CustomFileBrowser(field_name, url, type, win) {
+            var cmsURL = "{% url admin:medialibrary_mediafile_changelist %}?t=id&pop=2";
+            cmsURL = cmsURL + "&type__exact=" + type;
+
+            tinyMCE.activeEditor.windowManager.open({
+                file				: cmsURL,
+                width				: 820,
+                height				: 500,
+                resizable			: "yes",
+                scrollbars			: "yes",
+                inline				: "no",
+                close_previous		: "no"
+            }, {
+                window				: win,
+                input				: field_name,
+                editor_id			: tinyMCE.selectedInstance.editorId
+            });
+            return false;
+        }
+        tinyMCE.init({
+            mode: "textarea",
+            {% block settings %}
+                theme: "advanced",
+                language: "pt",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_buttons1: "{% block buttons1 %}{{ TINYMCE_BUTTONS_1|join:',' }}{% endblock %}",
+                theme_advanced_buttons2: "{% block buttons2 %}{{ TINYMCE_BUTTONS_2|join:',' }}{% endblock %}",
+                theme_advanced_buttons3: "{% block buttons3 %}{{ TINYMCE_BUTTONS_3|join:',' }}{% endblock %}",
+                theme_advanced_buttons4: "{% block buttons4 %}{{ TINYMCE_BUTTONS_4|join:',' }}{% endblock %}",
+                theme_advanced_path: false,
+                theme_advanced_blockformats: "{% block blockformats %}{{ TINYMCE_BLOCK_FORMATS|join:',' }}{% endblock %}",
+                theme_advanced_resizing: true,
+                width: '680',
+                height: '300',
+                content_css: "{% block content_css_url %}{{ TINYMCE_CONTENT_CSS_URL }}{% endblock %}",
+                {% if TINYMCE_LINK_LIST_URL %}external_link_list_url: "{{ TINYMCE_LINK_LIST_URL }}",{% endif %}
+                {% if TINYMCE_INIT_INSTANCE_CALLBACK %}init_instance_callback: "{{TINYMCE_INIT_INSTANCE_CALLBACK}}",{% endif %}
+                plugins: "{% block plugins %}{{ TINYMCE_PLUGINS|join:',' }}{% endblock %}",
+                paste_auto_cleanup_on_paste: true,
+                relative_urls: false,
+                style_formats : [
+                    {% block style_formats %}
+                        {title : 'Red text', selector: 'p,h1,h2,h3,h4,h5,h6', classes : 'special1'},
+                        {title : 'No Margin Bottom', selector: 'p,h1,h2,h3,h4,h5,h6', classes : 'no-margin-b'}
+                    {% endblock %}
+                ],
+                file_browser_callback: "CustomFileBrowser",
+            {% endblock %}
+        });
+
+        (function($){
+            var tinymce_added 		= {};
+            var unSelecte_added 	= {};
+
+            function feincms_richtext_remove_tinymce(field) {
+                var id = field ? field.id : this.id;
+                if(tinymce_added[id]) {
+                    tinyMCE.execCommand('mceRemoveControl', false, id);
+                    tinymce_added[id] = false;
+                }
+            }
+
+            function feincms_richtext_add_tinymce(field) {
+                var id = field ? field.id : this.id;
+                if(!tinymce_added[id]) {
+                    tinyMCE.execCommand('mceAddControl', false, id);
+                    tinymce_added[id] = true;
+                }
+            }
+            function addUnSelect(field) {
+                var id = field ? field.id : this.id;
+                if(!unSelecte_added[id]) {
+                    $(field).find('option').mousedown(function(){
+                        var $self = $(this);
+                        if ($self.attr("selected"))
+                            $self.removeAttr("selected");
+                        else
+                            $self.attr("selected", "selected");
+                        return false;
+                    });
+                    unSelecte_added[id] = true;
+                }
+            }
+
+            var richtext_init_fn = function(){
+                $('{% block selectors %}.order-machine textarea.item-richtext, #frontend_editor textarea.item-richtext{% endblock %}').each(function(){
+                    feincms_richtext_add_tinymce(this);
+                });
+                $("select[multiple]").each(function(){
+                    addUnSelect(this);
+                });
+            }
+
+            {% block enable %}
+                contentblock_init_handlers.push(richtext_init_fn);
+                contentblock_move_handlers.poorify.push(function(item) {
+                    item.find('textarea.item-richtext').each(feincms_richtext_remove_tinymce);
+                });
+                contentblock_move_handlers.richify.push(function(item) {
+                    item.find('textarea.item-richtext').each(feincms_richtext_add_tinymce);
+                });
+            {% endblock %}
+        })(feincms.jQuery);
+    </script>
+{% endblock %}
