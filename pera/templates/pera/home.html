@@ -1,8 +1,37 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load url from future %}
+{% block title %}{% trans "Django Require.js Example" %}{% endblock %}
 
-{% block body_class %}{{ block.super }} home-page{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/pera/css/reset.less" type="text/less" />
+    <link rel="stylesheet" href="/static/pera/css/base.less" type="text/less" />
+    <link rel="stylesheet" href="/static/pera/css/layout.less" type="text/less" />
+    <link rel="stylesheet" href="/static/pera/css/module.less" type="text/less" />
+    <link rel="stylesheet" href="/static/pera/css/page.less" type="text/less" />
+    <link rel="stylesheet" href="/static/pera/css/state.less" type="text/less" />
+{% endblock %}
 
-{% block content %}
+{% block js %}
+    <script>
+        var require = {
+            baseUrl: '{{ STATIC_URL }}'
+        };
+    </script>
+    <script src="{{ STATIC_URL }}components/requirejs/require.js"></script>
+    <script>
+        var project;
+        require(['config'], function () {
+            console.log('sdf');
+            require(['jquery', 'main'], function ($, Main) {
+                $(function () {
+                    //project = new Main();
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block body_middle %}
     <section id="todoapp">
         <header id="header">
             <h1>todos</h1>

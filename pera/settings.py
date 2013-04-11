@@ -57,6 +57,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
 SECRET_KEY = 'gu0)hl7a-bs$y&amp;gi@ewi6p-*81=2kow^vu@+kk@q-$n5(4(ei)'
 
@@ -81,7 +82,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
@@ -111,6 +112,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'mptt',
     'sorl.thumbnail',
+    'require',
 
     'feincms',
     'feincms.module.page',
@@ -118,6 +120,7 @@ INSTALLED_APPS = (
 
     'account',
     'pera',
+    'todomvc',
 )
 
 EMAIL_USE_TLS = True
@@ -163,10 +166,33 @@ DEBUG_TOOLBAR_CONFIG = {
     #'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
     #'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
     'HIDE_DJANGO_SQL': False,
-    #'TAG': 'div',
+    'TAG': 'body',
     'ENABLE_STACKTRACES': True,
 }
 
+########
+# PERA #
+########
+PERA_COMPONENTS_PATH = 'components/'
+PERA_REQUIRE_BASE_URL = 'components/requirejs/require.js'
+
+###########
+# REQUIRE #
+###########
+#REQUIRE_BASE_URL = 'components/requirejs/require.js'
+REQUIRE_BASE_URL = ''
+REQUIRE_BUILD_PROFILE = 'app.build.js'
+REQUIRE_JS = 'components/requirejs/require.js'
+REQUIRE_STANDALONE_MODULES = {
+    'main': {
+        'out': 'main.built.js'
+    }
+}
+REQUIRE_ENVIRONMENT = 'auto'
+
+###########
+# LOGGING #
+###########
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

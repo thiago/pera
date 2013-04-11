@@ -32,29 +32,29 @@ Enviar e customizar templates de emails diretamente no "Action" da listagem do a
 Account
 -------
 
-**Template tags
+###Template tags
 
-get_info:
+**get_info**
 
     {{ USER|get_info:['telefone[,order]'] }}
 
-ou:
+**ou**
 
     {% with tel=USER|get_info:['telefone[,order]'] %}
         ...
     {% endwith %}
 
-get_info_flat
+**get_info_flat**
 
     {{ USER|get_info_flat:['telefone[,order]'] }}
 
-ou:
+**ou**
 
     {% with tel=USER|get_info_flat[:'telefone[,order]'] %}
         ...
     {% endwith %}
 
-get_avatar
+**get_avatar**
 
     # Padrão é 'square' mas você pode usar 'square', 'small', 'normal' ou 'large'
     # Você pode especificar mais opcões em "ACCOUNT_SIZES" no arquivo 'settings.py'.

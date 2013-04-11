@@ -1,8 +1,24 @@
 # -- coding: utf-8 --
 __author__ = 'thiagorodrigues'
 from django.db import models
+from django.http import HttpResponseForbidden
 from django.utils.translation import ugettext_lazy as _
 from feincms.admin import tree_editor
+
+
+def get_attr_super_page(page, attr, default=None):
+    current = page
+    while current:
+        if getattr(current, attr):
+            return getattr(current, attr)
+        current = current.parent
+    return default
+
+
+def authenticated_request_processor(page, request):
+    page.private = get_attr_super_page(page, 'private', False)
+    if not request.user.is_authenticated() and page.private:
+        return HttpResponseForbidden()
 
 
 def register(cls, admin_cls):

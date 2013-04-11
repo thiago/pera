@@ -39,6 +39,17 @@ module.exports = function(grunt) {
 		        out: 'static/pera/js/admin.js',
 		        preserveLicenseComments: false
 	        }
+        },
+        todomvc: {
+	        options: {
+		        baseUrl: 'static/',
+		        paths: config.paths,
+		        shim: config.shim,
+		        name: 'todomvc/backbone_require/js/main',
+		        //dir     : "./static/compiled/js/",
+		        out: 'static/todomvc/backbone_require/dist/todomvc_backbone_require.js',
+		        preserveLicenseComments: true
+	        }
         }
       }
     });
@@ -48,7 +59,7 @@ module.exports = function(grunt) {
     grunt.config.set('requirejs.compile.options.baseUrl', 'static/');
 
     // Alias requirejs to js
-    grunt.registerTask('js', 'requirejs:admin');
+    grunt.registerTask('js', 'requirejs:todomvc');
 
     // Set the default grunt task, run when you type `grunt` with no arguments.
     grunt.registerTask('default', 'lint js css');

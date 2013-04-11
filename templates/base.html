@@ -1,0 +1,36 @@
+{% load i18n cache compress %}
+{% load url from future %}
+
+<!DOCTYPE html>
+{% spaceless %}
+<html {% block html_inline %}lang="{{ LANGUAGE_CODE|slice:"2" }}"{% endblock %}>
+    <head {% block head_inline %}{% endblock %}>
+        {% block head_start %}{% endblock %}
+        <title>{% block title %}{{ site.name }}{% endblock %}</title>
+        {% block head_meta %}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+            <meta content="{% block meta_keywords %}{% endblock %}" name="keywords" />
+            <meta content="{% block meta_description %}{% endblock %}" name="description" />
+        {% endblock %}
+        {% block css_uncompress %}{% endblock %}
+        {% compress css %}{% block css %}{% endblock %}{% endcompress %}
+        {% block head_end %}{% endblock %}
+    </head>
+    <body id="{% block body_id %}base{% endblock %}" class="{% block body_class %}user-{{ user.is_authenticated|yesno:'authenticated,anonymous' }}{% endblock %}" {% block body_inline %}{% endblock %}>
+        {% block body %}
+            {% block body_start %}{% endblock %}
+            {% block body_middle %}{% endblock %}
+            {% block body_end %}{% endblock %}
+            {% if not noscript %}
+                {% block js_template %}{% endblock %}
+                {% block js_uncompress %}{% endblock %}
+                {% compress js %}
+                    {% block js %}{% endblock %}
+                {% endcompress %}
+                {% block js_uncompress_last %}{% endblock %}
+            {% endif %}
+        {% endblock %}
+    </body>
+    </html>
+{% endspaceless %}

@@ -1,11 +1,8 @@
-define([
-    'backbone',
-	'angular.ui'
-], function ( Backbone) {
+define(['backbone'], function ( ) {
     // Initialize routing and start Backbone.history()
     return function () {
         //new Workspace();
-        Backbone.history.start();
+        console.log('sfsdf');
 
         // Initialize the application view
         //new AppView();

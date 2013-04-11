@@ -23,9 +23,7 @@ var config = {
 	    "underscore"    : "components/underscore/underscore",
 	    "text"          : "components/requirejs-text/text",
 	    "backbone"      : "components/backbone/backbone",
-	    "mustache"      : "components/mustache/mustache",
-	    "jqueryui"      : "components/jqueryui/jqueryui",
-	    "localstorage"  : "components/backbone.localStorage/backbone.localStorage",
+	    "backbone.localstorage"  : "components/backbone.localStorage/backbone.localStorage",
 
 	    //angular libs
 	    angular                                 : "components/angular/angular.min",
@@ -120,24 +118,16 @@ var config = {
       underscore: {
           exports: '_'
       },
-      backbone : {
-          deps: ['underscore', 'jquery'],
-          exports: 'Backbone'
-      },
-      mustache : {
-          exports: 'Mustache'
-      },
-      jqueryui : {
-          deps: ['jquery'],
-          exports: '$'
-      },
-      localstorage: {
-          deps: ['backbone', 'underscore'],
-          exports: 'Store'
-      },
 	    jquery : {
 		    exports : 'jQuery'
 	    },
+      backbone : {
+          deps: ['underscore'],
+          exports: 'Backbone'
+      },
+      "backbone.localstorage": {
+          deps: ['backbone']
+      },
 	    lodash : {
 		    exports : '_'
 	    },
@@ -190,7 +180,7 @@ var config = {
 	    "jquery.maskedinput"            : ['jquery'],
 	    "components/jquery-ui/ui/minified/jquery-ui.custom.min"      : ['jquery'],
 	    "components/jquery-ui/ui/minified/jquery.ui.datepicker.min"  : ['jquery', 'jquery.ui.core'],
-	    "jquery.ui"                     : ['jquery', "components/jquery-ui/ui/minified/jquery-ui.custom.min"],
+	    "jquery.ui"                     : ["components/jquery-ui/ui/minified/jquery-ui.custom.min"],
 	    "jquery.ui.core"                : ['jquery'],
 	    "jquery.ui.accordion"           : ['jquery', 'jquery.ui.core'],
 	    "jquery.ui.autocomplete"        : ['jquery', 'jquery.ui.core'],
@@ -243,7 +233,11 @@ var config = {
 
     // Application scripts to include in optimzation.
     modules : [
-        { name: 'main' }
+        { name: 'main' },
+	    {
+		    name: "todomvc",
+		    include: ["foo/bar/bee"]
+	    }
     ],
 
     // Directory where our optimized files will be compiled to:

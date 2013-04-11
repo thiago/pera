@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body_middle %}
+    <div id="content">
+        {% block content %}
+            {% for content in feincms_page.content.main %}
+                {{ content.render }}
+            {% endfor %}
+        {% endblock %}
+    </div>
+
+    <div id="sidebar">
+        {% block sidebar %}
+            {% for content in feincms_page.content.sidebar %}
+                {{ content.render }}
+            {% endfor %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -5,3 +5,5 @@ django-admin-tools
 django-autocomplete
 django-compressor
 django-debug-toolbar
+django-mptt
+django-require
