@@ -1,10 +1,7 @@
-{% extends 'base.html' %}
-{% load require pera_tags %}
+{% extends 'todomvc/base.html' %}
+{% load pera_tags i18n %}
 
-{% block title %}AngularJS + RequireJS • TodoMVC • Django{% endblock %}
-{% block css_uncompress %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}components/todomvc-common/base.css">
-{% endblock %}
+{% block title %}AngularJS + RequireJS • {{ block.super }}{% endblock %}
 {% block head_end %}
     <style>[ng-cloak] {display: none}</style>
     <script>
@@ -22,12 +19,12 @@
         <header id="header">
             <h1>todos</h1>
             <form id="todo-form" ng-submit="addTodo()">
-                <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
+                <input id="new-todo" placeholder="{% trans 'What needs to be done?' %}" ng-model="newTodo" autofocus>
             </form>
         </header>
         <section id="main" ng-show="todos.length" ng-cloak>
             <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
-            <label for="toggle-all">Mark all as complete</label>
+            <label for="toggle-all">{% trans 'Mark all as complete' %}</label>
             <ul id="todo-list">
                 <li ng-repeat="todo in todos | filter:statusFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
                     <div class="view">
@@ -42,38 +39,25 @@
             </ul>
         </section>
         <footer id="footer" ng-show="todos.length" ng-cloak>
-			<span id="todo-count"><strong>((remainingCount))</strong>
+			<span id="todo-count"><strong>((remainingCount)) </strong>
 				<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
 			</span>
             <ul id="filters">
                 <li>
-                    <a ng-class="{selected: location.path() == '/'} " href="#/">All</a>
+                    <a ng-class="{selected: location.path() == '/'} " href="#/">{% trans 'All' %}</a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/active'}" href="#/active">Active</a>
+                    <a ng-class="{selected: location.path() == '/active'}" href="#/active">{% trans 'Active' %}</a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed">Completed</a>
+                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed">{% trans 'Completed' %}</a>
                 </li>
             </ul>
-            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length">Clear completed ( ((todos.length - remainingCount)) )</button>
+            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length">{% trans 'Clear completed' %} ( ((todos.length - remainingCount)) )</button>
         </footer>
     </section>
 {% endblock %}
-{% block body_end %}
-    <footer id="info">
-        <p>Double-click to edit a todo</p>
-        <p>Credits:
-            <a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
-            <a href="http://ericbidelman.com">Eric Bidelman</a>,
-            <a href="http://jacobmumm.com">Jacob Mumm</a>,
-            <a href="http://igorminar.com">Igor Minar</a> and
-            <a href="http://twitter.com/passy">Pascal Hartig</a>
-        </p>
-        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-    </footer>
-{% endblock %}
 {% block js_uncompress %}
-    <script src="{{ STATIC_URL }}components/todomvc-common/base.js"></script>
+    {{ block.super }}
     {% require_with_config main='main' base_path='todomvc/angularjs_require/js/' %}
 {% endblock %}

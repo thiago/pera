@@ -1,32 +1,19 @@
 {% extends 'base.html' %}
-{% load require pera_tags %}
+{% load pera_tags i18n %}
 
-{% block title %}Backbone.js + RequireJS • TodoMVC • Django{% endblock %}
+{% block title %}TodoMVC • Django{% endblock %}
 {% block css_uncompress %}
     <link rel="stylesheet" href="{{ STATIC_URL }}components/todomvc-common/base.css">
 {% endblock %}
-{% block body_middle %}
-    <section id="todoapp">
-        <header id="header">
-            <h1>todos</h1>
-            <input id="new-todo" placeholder="What needs to be done?" autofocus>
-        </header>
-        <section id="main">
-            <input id="toggle-all" type="checkbox">
-            <label for="toggle-all">Mark all as complete</label>
-            <ul id="todo-list"></ul>
-        </section>
-        <footer id="footer"></footer>
-    </section>
-{% endblock %}
+{% block body_middle %}{% endblock %}
 {% block body_end %}
     <footer id="info">
-        <p>Double-click to edit a todo</p>
+        <p>{% trans 'Double-click to edit a todo' %}</p>
         <p>Written by <a href="http://addyosmani.github.com/todomvc/">Addy Osmani</a></p>
-        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+        <p>{% trans 'Part of' %} <a href="http://todomvc.com">TodoMVC</a></p>
+        <p>{% trans 'Integrated with Django by' %} <a href="http://github.com/trsouz/pera">Pera project</a></p>
     </footer>
 {% endblock %}
 {% block js_uncompress %}
     <script src="{{ STATIC_URL }}components/todomvc-common/base.js"></script>
-    {% require_with_config main='main' base_path='todomvc/backbone_require/js/' %}
 {% endblock %}

@@ -2,6 +2,7 @@ __author__ = 'thiago.rodrigues'
 
 from django import template
 from django.conf import settings
+from pera import defaults
 register = template.Library()
 
 
@@ -23,12 +24,12 @@ def get_components_path(components_path, app_path=''):
 
 @register.inclusion_tag('pera/require_config.html', takes_context=True)
 def require_with_config(context, *args, **kwargs):
-    require_path = '%s%s' % (settings.STATIC_URL, (kwargs.get('require_path', None) or settings.PERA_REQUIRE_BASE_URL))
+    require_path = '%s%s' % (settings.STATIC_URL, (kwargs.get('require_path', None) or defaults.PERA_REQUIRE_BASE_URL))
 
     context.update({
         'main': kwargs.get('main', ''),
         'base_path': kwargs.get('base_path', ''),
-        'components': get_components_path(kwargs.get('components', '') or settings.PERA_COMPONENTS_PATH, kwargs.get('base_path', '')),
+        'components': get_components_path(kwargs.get('components', '') or defaults.PERA_COMPONENTS_PATH, kwargs.get('base_path', '')),
         'require_path': require_path,
     })
     return context

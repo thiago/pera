@@ -7,3 +7,4 @@ django-compressor
 django-debug-toolbar
 django-mptt
 django-require
+django-tastypie

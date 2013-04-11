@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'mptt',
     'sorl.thumbnail',
     'require',
+    'tastypie',
 
     'feincms',
     'feincms.module.page',
@@ -169,12 +170,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'TAG': 'body',
     'ENABLE_STACKTRACES': True,
 }
-
-########
-# PERA #
-########
-PERA_COMPONENTS_PATH = 'components/'
-PERA_REQUIRE_BASE_URL = 'components/requirejs/require.js'
 
 ###########
 # REQUIRE #

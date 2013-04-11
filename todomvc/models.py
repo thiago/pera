@@ -29,8 +29,6 @@ class Todo(models.Model):
 
 
 class TodoContent(models.Model):
-
-
     feincms_item_editor_includes = {
         #'head': ['admin/content/mediafile/init.html'],
     }

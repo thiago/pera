@@ -1,0 +1,22 @@
+{% extends 'todomvc/base.html' %}
+{% load pera_tags %}
+
+{% block title %}Backbone.js + RequireJS • {{ block.super }}{% endblock %}
+{% block body_middle %}
+    <section id="todoapp">
+        <header id="header">
+            <h1>todos</h1>
+            <input id="new-todo" placeholder="What needs to be done?" autofocus>
+        </header>
+        <section id="main">
+            <input id="toggle-all" type="checkbox">
+            <label for="toggle-all">Mark all as complete</label>
+            <ul id="todo-list"></ul>
+        </section>
+        <footer id="footer"></footer>
+    </section>
+{% endblock %}
+{% block js_uncompress %}
+    {{ block.super }}
+    {% require_with_config main='main' base_path='todomvc/backbone_require/js/' %}
+{% endblock %}
