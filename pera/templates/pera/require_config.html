@@ -2,56 +2,40 @@
 <script>
 var require = {
     baseUrl: '{{ STATIC_URL }}{{ base_path }}',
+    locale: '{{ LANGUAGE_CODE|lower }}',
     paths: {
-        components: '{{ components }}',
+        // Pera
+        'pera': '{{ STATIC_URL }}pera',
+        'pera.angular.app': '{{ STATIC_URL }}pera/js/angular/app',
 
-        // Libraries
-        select2: '{{ components }}select2/select2_locale_pt-BR',
+        // Components
+        components: '{{ components }}',
+        // RequireJS
+        require: '{{ components }}requirejs/require',
+        i18n: '{{ components }}requirejs-i18n/i18n',
+        text: '{{ components }}requirejs-text/text',
+        domReady: '{{ components }}requirejs-domready/domReady',
+
+        // Plugins
         moment: '{{ components }}moment/min/lang/pt-br',
-        carouFredSel: '{{ components }}carouFredSel-5.6.1/jquery.carouFredSel-5.6.1-packed',
-        'underscore': '{{ components }}underscore/underscore',
-        'text': '{{ components }}requirejs-text/text',
-        'backbone': '{{ components }}backbone/backbone',
+        'moment.i18n': '{{ components }}moment/min/lang',
+
+        select2: '{{ components }}select2/select2_locale_pt-BR',
+        underscore: '{{ components }}underscore/underscore',
+        backbone: '{{ components }}backbone/backbone',
         'backbone.localstorage': '{{ components }}backbone.localStorage/backbone.localStorage',
 
-        //angular libs
-        angular: '{{ components }}angular/angular.min',
-        'angular.cookies': '{{ components }}angular-cookies/angular-cookies',
-        'angular.mocks': '{{ components }}angular-mocks/angular-mocks',
-        'angular.resource': '{{ components }}angular-resource/angular-resource',
-        'angular.sanitize': '{{ components }}angular-sanitize/angular-sanitize',
-        'angular.module.localStorage': '{{ components }}plugins/angular.module.localStorage',
-
-        'angular.ui': '{{ components }}angular-ui/build/angular-ui',
-        'angular.ui.common': '{{ components }}angular-ui/common/module',
-        'angular.ui.directives.animate': '{{ components }}angular-ui/modules/directives/animate/animate',
-        'angular.ui.directives.calendar': '{{ components }}angular-ui/modules/directives/calendar/calendar',
-        'angular.ui.directives.codemirror': '{{ components }}angular-ui/modules/directives/codemirror/codemirror',
-        'angular.ui.directives.currency': '{{ components }}angular-ui/modules/directives/currency/currency',
-        'angular.ui.directives.date': '{{ components }}angular-ui/modules/directives/date/date',
-        'angular.ui.directives.event': '{{ components }}angular-ui/modules/directives/event/event',
-        'angular.ui.directives.if': '{{ components }}angular-ui/modules/directives/if/if',
-        'angular.ui.directives.jq': '{{ components }}angular-ui/modules/directives/jq/jq',
-        'angular.ui.directives.keypress': '{{ components }}angular-ui/modules/directives/keypress/keypress',
-        'angular.ui.directives.map': '{{ components }}angular-ui/modules/directives/map/map',
-        'angular.ui.directives.mask': '{{ components }}angular-ui/modules/directives/mask/mask',
-        'angular.ui.directives.reset': '{{ components }}angular-ui/modules/directives/reset/reset',
-        'angular.ui.directives.route': '{{ components }}angular-ui/modules/directives/route/route',
-        'angular.ui.directives.scrollfix': '{{ components }}angular-ui/modules/directives/scrollfix/scrollfix',
-        'angular.ui.directives.select2': '{{ components }}angular-ui/modules/directives/select2/select2',
-        'angular.ui.directives.showhide': '{{ components }}angular-ui/modules/directives/showhide/showhide',
-        'angular.ui.directives.sortable': '{{ components }}angular-ui/modules/directives/sortable/sortable',
-        'angular.ui.directives.tinymce': '{{ components }}angular-ui/modules/directives/tinymce/tinymce',
-        'angular.ui.directives.validate': '{{ components }}angular-ui/modules/directives/validate/validate',
-        'angular.ui.filters.format': '{{ components }}angular-ui/modules/filters/format/format',
-        'angular.ui.filters.highlight': '{{ components }}angular-ui/modules/filters/highlight/highlight',
-        'angular.ui.filters.inflector': '{{ components }}angular-ui/modules/filters/inflector/inflector',
-        'angular.ui.filters.unique': '{{ components }}angular-ui/modules/filters/unique/unique',
-
+        // jQuery
         jquery: '{{ components }}jquery/jquery',
+        carouFredSel: '{{ components }}carouFredSel-5.6.1/jquery.carouFredSel-5.6.1-packed',
         'jquery.maskedinput': '{{ components }}plugins/jquery.maskedinput',
         'jquery.fancybox': '{{ components }}fancybox/source/jquery.fancybox.pack',
         'jquery.ui': '{{ components }}jquery-ui/ui/minified/i18n/jquery.ui.datepicker-pt-BR.min',
+
+        /* TODO:
+            resolver problema para o idioma do jquery.ui
+         */
+        'jquery.ui.i18n': '{{ components }}jquery-ui/ui/minified/i18n/',
         'jquery.ui.accordion': '{{ components }}jquery-ui/ui/minified/jquery.ui.accordion.min',
         'jquery.ui.autocomplete': '{{ components }}jquery-ui/ui/minified/jquery.ui.autocomplete.min',
         'jquery.ui.button': '{{ components }}jquery-ui/ui/minified/jquery.ui.button.min',
@@ -87,6 +71,40 @@ var require = {
         'jquery.ui.tooltip': '{{ components }}jquery-ui/ui/minified/jquery.ui.tooltip.min',
         'jquery.ui.widget': '{{ components }}jquery-ui/ui/minified/jquery.ui.widget.min',
 
+        // AngularJS
+        angular: '{{ components }}angular/angular.min',
+        'angular.cookies': '{{ components }}angular-cookies/angular-cookies',
+        'angular.mocks': '{{ components }}angular-mocks/angular-mocks',
+        'angular.resource': '{{ components }}angular-resource/angular-resource',
+        'angular.sanitize': '{{ components }}angular-sanitize/angular-sanitize',
+        'angular.module.localStorage': '{{ components }}plugins/angular.module.localStorage',
+        'angular.ui': '{{ components }}angular-ui/build/angular-ui',
+        'angular.ui.common': '{{ components }}angular-ui/common/module',
+        'angular.ui.directives.animate': '{{ components }}angular-ui/modules/directives/animate/animate',
+        'angular.ui.directives.calendar': '{{ components }}angular-ui/modules/directives/calendar/calendar',
+        'angular.ui.directives.codemirror': '{{ components }}angular-ui/modules/directives/codemirror/codemirror',
+        'angular.ui.directives.currency': '{{ components }}angular-ui/modules/directives/currency/currency',
+        'angular.ui.directives.date': '{{ components }}angular-ui/modules/directives/date/date',
+        'angular.ui.directives.event': '{{ components }}angular-ui/modules/directives/event/event',
+        'angular.ui.directives.if': '{{ components }}angular-ui/modules/directives/if/if',
+        'angular.ui.directives.jq': '{{ components }}angular-ui/modules/directives/jq/jq',
+        'angular.ui.directives.keypress': '{{ components }}angular-ui/modules/directives/keypress/keypress',
+        'angular.ui.directives.map': '{{ components }}angular-ui/modules/directives/map/map',
+        'angular.ui.directives.mask': '{{ components }}angular-ui/modules/directives/mask/mask',
+        'angular.ui.directives.reset': '{{ components }}angular-ui/modules/directives/reset/reset',
+        'angular.ui.directives.route': '{{ components }}angular-ui/modules/directives/route/route',
+        'angular.ui.directives.scrollfix': '{{ components }}angular-ui/modules/directives/scrollfix/scrollfix',
+        'angular.ui.directives.select2': '{{ components }}angular-ui/modules/directives/select2/select2',
+        'angular.ui.directives.showhide': '{{ components }}angular-ui/modules/directives/showhide/showhide',
+        'angular.ui.directives.sortable': '{{ components }}angular-ui/modules/directives/sortable/sortable',
+        'angular.ui.directives.tinymce': '{{ components }}angular-ui/modules/directives/tinymce/tinymce',
+        'angular.ui.directives.validate': '{{ components }}angular-ui/modules/directives/validate/validate',
+        'angular.ui.filters.format': '{{ components }}angular-ui/modules/filters/format/format',
+        'angular.ui.filters.highlight': '{{ components }}angular-ui/modules/filters/highlight/highlight',
+        'angular.ui.filters.inflector': '{{ components }}angular-ui/modules/filters/inflector/inflector',
+        'angular.ui.filters.unique': '{{ components }}angular-ui/modules/filters/unique/unique',
+
+        // Bootstrap JS
         bootstrap: '{{ components }}bootstrap/js/bootstrap',
         'bootstrap.affix': '{{ components }}bootstrap/js/bootstrap-affix',
         'bootstrap.alert': '{{ components }}bootstrap/js/bootstrap-alert',
@@ -120,13 +138,13 @@ var require = {
             exports: '_'
         },
         angular: {
-            deps: ['jquery'],
             exports: 'angular'
         },
         moment: {
             deps: ['{{ components }}moment/min/moment.min'],
             exports: 'moment'
         },
+        i18n: ['require'],
         carouFredSel: ['jquery'],
         '{{ components }}select2/select2': ['jquery'],
         select2: ['jquery', '{{ components }}select2/select2'],

@@ -4,22 +4,13 @@
 {% block title %}AngularJS + RequireJS • {{ block.super }}{% endblock %}
 {% block head_end %}
     <style>[ng-cloak] {display: none}</style>
-    <script>
-        // Include angular-loader to allow modules to be loaded in any order.
-        /*
-         AngularJS v1.0.2
-         (c) 2010-2012 Google, Inc. http://angularjs.org
-         License: MIT
-         */
-        (function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"), value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
-    </script>
 {% endblock %}
 {% block body_middle %}
     <section id="todoapp" ng-controller="TodoController">
         <header id="header">
-            <h1>todos</h1>
+            <h1 ng-bind="i18n.title"></h1>
             <form id="todo-form" ng-submit="addTodo()">
-                <input id="new-todo" placeholder="{% trans 'What needs to be done?' %}" ng-model="newTodo" autofocus>
+                <input id="new-todo" placeholder="(( i18n.form.placeholder ))" ng-model="newTodo" autofocus>
             </form>
         </header>
         <section id="main" ng-show="todos.length" ng-cloak>
@@ -39,21 +30,21 @@
             </ul>
         </section>
         <footer id="footer" ng-show="todos.length" ng-cloak>
-			<span id="todo-count"><strong>((remainingCount)) </strong>
-				<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+			<span id="todo-count">
+				<ng-pluralize count="remainingCount" when="(( i18n.pluralize.count ))"></ng-pluralize>
 			</span>
             <ul id="filters">
                 <li>
-                    <a ng-class="{selected: location.path() == '/'} " href="#/">{% trans 'All' %}</a>
+                    <a ng-class="{selected: location.path() == '/'} " href="#/" ng-bind="i18n.filter.all"></a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/active'}" href="#/active">{% trans 'Active' %}</a>
+                    <a ng-class="{selected: location.path() == '/active'}" href="#/active" ng-bind="i18n.filter.active"></a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed">{% trans 'Completed' %}</a>
+                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed" ng-bind="i18n.filter.completed"></a>
                 </li>
             </ul>
-            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length">{% trans 'Clear completed' %} ( ((todos.length - remainingCount)) )</button>
+            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length" ng-bind="i18n.action.clear + ' (' + (todos.length - remainingCount) + ')'" ></button>
         </footer>
     </section>
 {% endblock %}
