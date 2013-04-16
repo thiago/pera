@@ -6,8 +6,9 @@ define([
 	'collections/todos',
 	'views/todos',
 	'text!templates/stats.html',
+	'i18n!../../../nls/todo',
 	'common'
-], function ($, _, Backbone, Todos, TodoView, statsTemplate, Common) {
+], function ($, _, Backbone, Todos, TodoView, statsTemplate, i18n_todo, Common) {
 	'use strict';
 
 	var AppView = Backbone.View.extend({
@@ -33,6 +34,7 @@ define([
 			this.allCheckbox = this.$('#toggle-all')[0];
 			this.$input = this.$('#new-todo');
 			this.$footer = this.$('#footer');
+			this.$header = this.$('#header');
 			this.$main = this.$('#main');
 
 			this.listenTo(Todos, 'add', this.addOne);
@@ -50,13 +52,19 @@ define([
 			var completed = Todos.completed().length;
 			var remaining = Todos.remaining().length;
 
+			// applying internationalization
+			this.$input.attr('placeholder', i18n_todo.form.placeholder);
+			this.$header.find('> h1').text(i18n_todo.title);
+			this.$main.find('> label[for="toggle-all"]').text(i18n_todo.form.all_complete);
+
 			if (Todos.length) {
 				this.$main.show();
 				this.$footer.show();
 
 				this.$footer.html(this.template({
 					completed: completed,
-					remaining: remaining
+					remaining: remaining,
+					i18n: i18n_todo
 				}));
 
 				this.$('#filters li a')

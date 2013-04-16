@@ -1,3 +1,5 @@
+# -- coding: utf-8 --
+
 import os
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
@@ -5,7 +7,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+# ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
@@ -18,12 +20,17 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-    }
+        }
 }
 
 INTERNAL_IPS = ('127.0.0.1',)
 TIME_ZONE = 'America/Sao_Paulo'
-LANGUAGE_CODE = 'pt-BR'
+LANGUAGE_CODE = 'pt-br'
+LANGUAGES = (
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('pt-br', 'Português'),
+)
 
 SITE_ID = 1
 
@@ -38,18 +45,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (("./static/", "static"))
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 AUTOCOMPLETE_MEDIA_PREFIX = STATIC_URL + 'autocomplete/media/'
-
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc --no-color {infile} {outfile}'),
-)
-
-COMPRESS_ROOT = ('static')
-COMPRESS_OUTPUT_DIR = 'compiled/'
-
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSMinFilter',
-]
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -77,12 +72,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
@@ -149,7 +145,7 @@ FEINCMS_RICHTEXT_INIT_CONTEXT = {
     'TINYMCE_BUTTONS_4': ['insertlayer', 'moveforward', 'movebackward', 'absolute', 'styleprops', 'cite', 'abbr', 'acronym', 'del', 'ins', 'attribs', 'visualchars', 'nonbreaking', 'template', 'pagebreak'],
     'TINYMCE_PLUGINS': ['autolink', 'lists', 'pagebreak', 'style', 'layer', 'table', 'advhr', 'advimage', 'advlink', 'emotions', 'iespell', 'inlinepopups', 'insertdatetime', 'preview', 'media', 'searchreplace', 'contextmenu', 'directionality', 'fullscreen', 'noneditable', 'visualchars', 'nonbreaking', 'xhtmlxtras', 'advlist'],
     'TINYMCE_BLOCK_FORMATS': ['h2', 'h3', 'h4', 'h5', 'h6', 'p'],
-}
+    }
 
 ###############
 # ADMIN_TOOLS #
@@ -169,7 +165,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'HIDE_DJANGO_SQL': False,
     'TAG': 'body',
     'ENABLE_STACKTRACES': True,
-}
+    }
 
 ###########
 # REQUIRE #
@@ -184,6 +180,19 @@ REQUIRE_STANDALONE_MODULES = {
     }
 }
 REQUIRE_ENVIRONMENT = 'auto'
+
+##############
+# COMPRESSOR #
+##############
+COMPRESS_ROOT = ('static')
+COMPRESS_OUTPUT_DIR = 'compiled/'
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc --no-color {infile} {outfile}'),
+)
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+    ]
 
 ###########
 # LOGGING #
@@ -208,8 +217,8 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
-        },
-    }
+            },
+        }
 }
 
 try:

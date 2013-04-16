@@ -3,7 +3,8 @@
 define({
 	title: 'tarefas',
 	form: {
-		placeholder: 'O que precisa ser feito?'
+		placeholder: 'O que precisa ser feito?',
+		all_complete: 'Marcar todas como completo'
 	},
 	filter: {
 		all: 'Tarefa',
@@ -16,8 +17,8 @@ define({
 	pluralize: {
 		count: {
 			'0': 'Nenhum item restante',
-			one: '((remainingCount)) item restante',
-			other: '((remainingCount)) itens restantes'
+			one: 'item restante',
+			other: 'itens restantes'
 		}
 	}
 });

@@ -6,10 +6,11 @@ from pera import defaults
 register = template.Library()
 
 
-@register.filter('components_path')
-def get_components_path(components_path, app_path=''):
+@register.simple_tag(name='components_path')
+def get_components_path(components='', base_path=''):
     rtn = []
-    current_path = app_path
+    components = components or defaults.PERA_COMPONENTS_PATH
+    current_path = base_path
     if current_path[:1] == '/':
         current_path = current_path[1:]
 
@@ -18,7 +19,7 @@ def get_components_path(components_path, app_path=''):
 
     if len(current_path.split('/')) > 1:
         rtn = ['../' for n in current_path.split('/')]
-    rtn.append(components_path, )
+    rtn.append(components, )
 
     return ''.join(rtn)
 
@@ -29,7 +30,7 @@ def require_with_config(context, *args, **kwargs):
     context.update({
         'main': kwargs.get('main', ''),
         'base_path': kwargs.get('base_path', ''),
-        'components': get_components_path(kwargs.get('components', '') or defaults.PERA_COMPONENTS_PATH, kwargs.get('base_path', '')),
+        'components': get_components_path(kwargs.get('components', ''), kwargs.get('base_path', '')),
         'require_path': require_path,
     })
     return context

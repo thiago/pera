@@ -3,7 +3,7 @@
 define({
 	'root': {
 		welcome: 'Welcome!',
-		eng_only_idiom: 'You have got to be pulling on my leg!'
+		error_create: 'You must enter a name for your application!'
 	},
-	'spa': true
+	'pt-br': true
 });

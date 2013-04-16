@@ -1,15 +1,21 @@
-<span id="todo-count"><strong><%= remaining %></strong> <%= remaining == 1 ? 'item' : 'items' %> left</span>
+<span id="todo-count">
+    <% if(remaining > 0 ){ %>
+        <strong><%= remaining %></strong> <%= remaining == 1 ? i18n.pluralize.count.one : i18n.pluralize.count.other %>
+    <% }else{ %>
+        <%= i18n.pluralize.count['0'] %>
+    <% } %>
+</span>
 <ul id="filters">
-	<li>
-		<a class="selected" href="#/">All</a>
-	</li>
-	<li>
-		<a href="#/active">Active</a>
-	</li>
-	<li>
-		<a href="#/completed">Completed</a>
-	</li>
+    <li>
+        <a class="selected" href="#/"><%= i18n.filter.all %></a>
+    </li>
+    <li>
+        <a href="#/active"><%= i18n.filter.active %></a>
+    </li>
+    <li>
+        <a href="#/completed"><%= i18n.filter.completed %></a>
+    </li>
 </ul>
 <% if ( completed ) { %>
-<button id="clear-completed">Clear completed (<%= completed %>)</button>
+<button id="clear-completed"><%= i18n.action.clear %> (<%= completed %>)</button>
 <% } %>

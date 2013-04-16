@@ -1,22 +1,28 @@
 'use strict';
 
-define(['angular'], function CommonApp(angular) {
-	var app                 = {};
-	app.define              = function define(name, dephs) {
-		if(name) {
-			var module            = angular.module(name, (dephs || []));
-			module.config(['$interpolateProvider', function ($interpolate) {
-			  $interpolate.startSymbol('((');
-			  $interpolate.endSymbol('))');
+define(['angular', 'i18n!pera/js/nls/app'], function (angular, app_text) {
+	var app = {};
+	app.define = function (name, dephs) {
+		if (name) {
+			var application = angular.module(name, (dephs || []));
+
+			application.config(['$interpolateProvider', function ($interpolate) {
+				$interpolate.startSymbol('((');
+				$interpolate.endSymbol('))');
 			}]);
-			app.__defineGetter__(name, function() {return module;});
+
+			app.__defineGetter__(name, function () {
+				return application;
+			});
+
 			return angular.extend(app[name], {
 				init: function init() {
 					angular.bootstrap(document, [name]);
 				}
 			});
+
 		} else {
-			/* TODO: implement error on app define */
+			console.error(app_text.error_create);
 		}
 	};
 

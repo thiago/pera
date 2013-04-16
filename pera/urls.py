@@ -24,5 +24,6 @@ urlpatterns = patterns('',
                        url(r'^autocomplete/', include(autocomplete.urls)),
                        url(r'^todomvc/', include('todomvc.urls'), name='todos'),
                        url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+                       url(r'^i18n/', include('django.conf.urls.i18n')),
                        url(r'', include('feincms.urls')),
                        ) + staticfiles_urlpatterns() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -22,12 +22,25 @@ Instalação
 Novidades
 =========
 
-Perfil Profissional
--------------------
+Pera
+----
 
-Enviar e customizar templates de emails diretamente no "Action" da listagem do admin Django.
+###Template tags
 
-* Altere o template padrão e depois customize o template do(s) usuários desejado.
+**require_with_config**
+
+    {% require_with_config main='main' [base_path='todomvc/backbone_require/js/' components='components/' require='components/requirejs/require.js'] %}
+    {% comment %}
+        retorna a configuração para o requirejs com o mapeamento dos arquivos baseado no base_path
+    {% endcomment %}
+
+**components_path**
+
+    {% components_path [components='components/' base_path='todomvc/backbone_require/js/'] %}
+    {# retorna ../../../components/ #}
+
+
+
 
 Account
 -------

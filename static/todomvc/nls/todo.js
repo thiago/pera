@@ -4,10 +4,11 @@ define({
 	'root': {
 		title: 'todos',
 		form: {
-			placeholder: 'What needs to be done?'
+			placeholder: 'What needs to be done?',
+			all_complete: 'Mark all as complete'
 		},
 		filter: {
-			dashboard: 'Todo',
+			all: 'Todo',
 			active: 'Active',
 			completed: 'Completed'
 		},
@@ -16,11 +17,12 @@ define({
 		},
 		pluralize: {
 			count: {
+				'0': 'No items remaining',
 				one: 'item left',
 				other: 'items left'
 			}
-		},
-		error_create: 'You must enter a name for your application!'
+		}
 	},
-	'pt-br': true
+	'pt-br': true,
+	'fr': true
 });
