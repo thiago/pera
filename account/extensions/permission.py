@@ -27,8 +27,13 @@ def register(cls, admin_cls):
         default=False,
         help_text=_('Check this option to only logged in users accessing this page and its ancestors')
     ))
-    admin_cls.fieldsets[0][1]['fields'] += ['private', ]
-    admin_cls.list_display.insert(2, 'is_private_admin')
+    if admin_cls:
+        #admin_cls.fieldsets[0][1]['fields'] += ['private', ]
+        admin_cls.list_display.insert(2, 'is_private_admin')
+        admin_cls.add_extension_options(_('Private page'), {
+            'fields': ('private', ),
+            'classes': ('collapse',),
+        })
 
     def is_private_admin(self, page):
         if not hasattr(self, "_private_pages"):
