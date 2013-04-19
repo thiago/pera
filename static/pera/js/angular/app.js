@@ -128,6 +128,7 @@ define(['pera/js/angular/common/app'], function (common_app) {
 					return args.get.apply(obj, [oldValue]);
 				},
 				setFn = function (newValue) {
+					console.log('new value', newValue );
 					return oldValue = args.set.apply(obj, [newValue]);
 				};
 

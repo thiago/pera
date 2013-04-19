@@ -27,7 +27,7 @@
  */
 define(['pera/js/angular/app'], function (app) {
 
-	// Map from CRUD to HTTP for our default `Backbone.sync` implementation.
+	var $injector = angular.injector(['ng', 'pera']);
 	var methodMap = {
 		'create': 'POST',
 		'update': 'PUT',
@@ -62,8 +62,10 @@ define(['pera/js/angular/app'], function (app) {
 	};
 
 	return app.factory('Model', ['$http', function ($http) {
+
 		var Model = function (attributes, options) {
 			var defaults;
+			var self = this;
 			var attrs = attributes || {};
 			this.cid = app.uniqueId('c');
 			this.attributes = {};
@@ -74,67 +76,27 @@ define(['pera/js/angular/app'], function (app) {
 			}
 			this.set(attrs, options);
 			this.changed = {};
+
+			this.objects = Array;
+			app.extend(this.objects, this.constructor, {
+				models: this.constructor
+			});
+			app.extend(this.objects.prototype, this.constructor.prototype, {
+				models: this.constructor
+			});
 			this.initialize.apply(this, arguments);
 		};
 
-		Model.sync = function (method, model, options) {
-			var type = methodMap[method];
-
-			// Default JSON-request options.
-			var params = {method: type};
-
-			// Ensure that we have a URL.
-			if (!options.url) {
-				params.url = app.result(model, 'url') || urlError();
-			}
-
-			if (type == 'GET') {
-				params.method = 'JSONP';
-				params.params = app.extend({callback: 'JSON_CALLBACK'}, options.params || {});
-			}
-
-			if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
-				params.data = options.attrs || model.toJson(options);
-			}
-
-			//model.trigger('request', model, xhr, options);
-			return $http(params).
-				success(function (data, status, headers, config) {
-					console.log(data, status, headers, config);
-					//model.trigger('sync', model, resp, options);
-				}).
-				error(function (data, status, headers, config) {
-					console.log(data, status, headers, config);
-					//model.trigger('error', model, xhr, options);
-				});
-		};
-
 		app.extend(Model.prototype, {
-
-			// A hash of attributes whose current and previous value differ.
 			changed: null,
-
-			// The default name for the JSON `id` attribute is `"id"`. MongoDB and
-			// CouchDB users may want to set this to `"_id"`.
 			idAttribute: 'id',
-
-			// Initialize is an empty function by default. Override it with your own
-			// initialization logic.
-			initialize: function () {
-			},
-
-			// Return a copy of the model's `attributes` object.
+			initialize: function () {},
 			toJson: function (options) {
 				return app.toJson(this.attributes);
 			},
 
-			// Proxy `Backbone.sync` by default.
 			sync: function () {
 				return this.constructor.sync.apply(this, arguments);
-			},
-
-			objects: function () {
-				return this.constructor.objects.apply(this, arguments);
 			},
 
 			// Get the value of an attribute.
@@ -401,30 +363,79 @@ define(['pera/js/angular/app'], function (app) {
 			}
 		});
 
-		Model.objects = function (model){
-			var self = this;
-			return{
-				all: function(){
-					console.log(self.constructor.url, self.url);
-				}
+		Model.sync = function (method, model, options) {
+			var type = methodMap[method];
+
+			// Default JSON-request options.
+			var params = {method: type};
+
+			// Ensure that we have a URL.
+			if (!options.url) {
+				params.url = app.result(model, 'url') || urlError();
+			}
+
+			if (type == 'GET') {
+				params.method = 'JSONP';
+				params.params = app.extend({callback: 'JSON_CALLBACK'}, options.params || {});
+			}
+
+			if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
+				params.data = options.attrs || model.toJson(options);
+			}
+
+			//model.trigger('request', model, xhr, options);
+			return $http(params).
+				success(function (data, status, headers, config) {
+					//model.trigger('sync', model, resp, options);
+				}).
+				error(function (data, status, headers, config) {
+					//model.trigger('error', model, xhr, options);
+				});
+		};
+
+		var ObjectsMethods = {
+
+			all: function(options){
+				return this;
+				options = options ? app.clone(options) : {};
+				return self.sync('read', self, options);
 			}
 		};
+		Model.objects = Array;
+		app.extend(Model.objects, ObjectsMethods);
+		app.extend(Model.objects.prototype, ObjectsMethods);
 
 		Model.extend = extend;
 
-		var a = Model.extend({url: 'instante_url'}, {url: 'class_url'});
-		var b = new a({url: 'b_instante_url'}, {url: 'a_instante_url'});
-		var c = new a();
+		var a = Model.extend({url: '/api/v1/todo'});
+		var b = new a();
+		var d = b.objects('asd');
+		var c = b.objects('Foo');
+		window.app = [];
+		app.each([
+			['A', a],
+			['.', a.objects],
+			['.1', a.objects('opcao 1')],
+			['.2', a.objects.all()],
+			['.3', a.objects('opcao 2').all()],
+			['B', b],
+			['.', b.objects],
+			['.1', b.objects('opcao 1')],
+			['.2', b.objects.all()],
+			['.3', b.objects('opcao 2').all()]
+		], function(data){
+			var key = '',
+				value = data;
+			if(app.isArray(data) && data.length > 1){
+				key = data[0];
+				value = data[1];
+			}
 
-		try{
-			console.log('with function');
-			Model.objects().all();
-			a.objects().all();
-			b.objects().all();
-		}catch (error){
+			window.app.push(value);
+			console.log(key, value);
+		});
 
-		}
-		console.log(app.keys(a), b, c);
+		//console.log(app.keys(a), b, c);
 		return Model;
 	}]);
 });

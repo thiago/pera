@@ -9,7 +9,7 @@ from todomvc.models import Todo
 
 
 class TodoResource(ModelResource):
-    owner = fields.ForeignKey(UserResource, attribute='owner')
+    owner = fields.ForeignKey(UserResource, attribute='owner', null=True, blank=True)
 
     class Meta:
         queryset = Todo.objects.all()

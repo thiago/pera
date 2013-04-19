@@ -1,8 +1,8 @@
 /*global define*/
 'use strict';
 
-define(['angular', 'i18n!../../nls/todo'], function (angular, todo_i18n) {
-	var app            = angular.module('todomvc', []);
+define(['angular', 'i18n!../../nls/todo', 'pera/js/angular/app'], function (angular, todo_i18n, pera_app) {
+	var app            = angular.module('todomvc', ['pera']);
 	app.config(['$interpolateProvider', function ($interpolate) {
 		$interpolate.startSymbol('((');
 		$interpolate.endSymbol('))');
