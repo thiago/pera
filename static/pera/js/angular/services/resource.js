@@ -1,5 +1,5 @@
 'use strict';
-/* TODO: Service extructure;
+/*TODO: Service extructure;
  cid: String
  idAttribute: String
  url: String
@@ -9,6 +9,9 @@
  update(attributes) return object updated
  delete() return true if success or false
  objects:
+
+ QuerySet(Array){
+ - init()
  - all (params) return promisse
  - create (attributes) post method
  - get (attributes) jsonp method
@@ -24,6 +27,7 @@
  - values
  - distinct
  - reverse
+ }
  */
 define(['pera/js/angular/app'], function (app) {
 
@@ -77,13 +81,13 @@ define(['pera/js/angular/app'], function (app) {
 			this.set(attrs, options);
 			this.changed = {};
 
-			this.objects = Array;
-			app.extend(this.objects, this.constructor, {
+			/*this.objects = app.clone(Array);
+			app.extend(this.objects, this.constructor.objects, {
 				models: this.constructor
 			});
-			app.extend(this.objects.prototype, this.constructor.prototype, {
+			app.extend(this.objects.prototype, this.constructor.objects.prototype, {
 				models: this.constructor
-			});
+			});*/
 			this.initialize.apply(this, arguments);
 		};
 
@@ -394,35 +398,24 @@ define(['pera/js/angular/app'], function (app) {
 		};
 
 		var ObjectsMethods = {
-
 			all: function(options){
 				return this;
 				options = options ? app.clone(options) : {};
 				return self.sync('read', self, options);
 			}
 		};
-		Model.objects = Array;
-		app.extend(Model.objects, ObjectsMethods);
-		app.extend(Model.objects.prototype, ObjectsMethods);
 
-		Model.extend = extend;
+
+		Model.extend = Array.extend = extend;
+		Model.Manager = Array.extend(ObjectsMethods, ObjectsMethods);
+
 
 		var a = Model.extend({url: '/api/v1/todo'});
 		var b = new a();
-		var d = b.objects('asd');
-		var c = b.objects('Foo');
-		window.app = [];
+		window.Model = Model;
 		app.each([
-			['A', a],
-			['.', a.objects],
-			['.1', a.objects('opcao 1')],
-			['.2', a.objects.all()],
-			['.3', a.objects('opcao 2').all()],
-			['B', b],
-			['.', b.objects],
-			['.1', b.objects('opcao 1')],
-			['.2', b.objects.all()],
-			['.3', b.objects('opcao 2').all()]
+			['A', Model.Manager],
+			['A', Model.Manager()]
 		], function(data){
 			var key = '',
 				value = data;
