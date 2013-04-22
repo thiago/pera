@@ -73,6 +73,7 @@ var require = {
 
         // AngularJS
         angular: '{{ components }}angular/angular.min',
+        'angular.pera': '{{ STATIC_URL }}pera/js/resource',
         'angular.cookies': '{{ components }}angular-cookies/angular-cookies',
         'angular.mocks': '{{ components }}angular-mocks/angular-mocks',
         'angular.resource': '{{ components }}angular-resource/angular-resource',
@@ -139,6 +140,10 @@ var require = {
         },
         angular: {
             exports: 'angular'
+        },
+        'angular.pera': {
+            deps: ['angular'],
+            exports: 'pera'
         },
         moment: {
             deps: ['{{ components }}moment/min/moment.min'],
