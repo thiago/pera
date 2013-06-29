@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-05 02:14-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: admin.py:14
+msgid "Only privates"
+msgstr "seuls les soldats"
+
+#: admin.py:17
+msgid "Display only private todos."
+msgstr "Afficher uniquement todos privés."
+
+#: models.py:17
+msgid "completed"
+msgstr "terminé"
+
+#: models.py:18
+msgid "private"
+msgstr "privé"
+
+#: models.py:19
+msgid "date created"
+msgstr "date de création"
+
+#: models.py:20
+msgid "date latest edited"
+msgstr "Date du dernier édité"
+
+#: models.py:21
+msgid "value"
+msgstr "valeur"
+
+#: models.py:22
+msgid "owner"
+msgstr "propriétaire"
+
+#: models.py:38
+msgid "todo"
+msgstr "todo"
+
+#: models.py:39 models.py:54 templates/todomvc/type/angular.html:11
+#: templates/todomvc/type/backbone.html:8
+msgid "todos"
+msgstr "todos"
+
+#: models.py:44
+#, python-format
+msgid "You have to add 'todomvc' to your INSTALLED_APPS before creating a %s"
+msgstr "Vous devez ajouter 'todomvc' à vos INSTALLED_APPS avant de créer un %s"
+
+#: models.py:47
+#, python-format
+msgid "You need to set TYPE_CHOICES when creating a %s"
+msgstr "Vous devez définir TYPE_CHOICES Lorsque vous créez un %s"
+
+#: models.py:49 models.py:61
+msgid "type"
+msgstr "catégorie"
+
+#: templates/todomvc/base.html:19
+msgid "Go"
+msgstr "aller"
+
+#: templates/todomvc/base.html:24
+msgid "Double-click to edit a todo"
+msgstr "Double-cliquez pour modifier un todo"
+
+#: templates/todomvc/base.html:25
+msgid "Written by"
+msgstr "écrit par"
+
+#: templates/todomvc/base.html:26
+msgid "Part of"
+msgstr "Une partie de"
+
+#: templates/todomvc/base.html:27
+msgid "Integrated with Django by"
+msgstr "Intégré avec Django par"
+
+#: templates/todomvc/type/angular.html:13
+#: templates/todomvc/type/backbone.html:9
+msgid "What needs to be done?"
+msgstr "Que faut-il faire?"
+
+#: templates/todomvc/type/angular.html:18
+#: templates/todomvc/type/backbone.html:13
+msgid "Mark all as complete"
+msgstr "Marquer tout comme complet"
+
+#: templates/todomvc/type/angular.html:34
+msgid "No items remaining"
+msgstr "Pas de points restants"
+
+#: templates/todomvc/type/angular.html:34
+msgid "item left"
+msgstr "pièce à gauche"
+
+#: templates/todomvc/type/angular.html:34
+msgid "items left"
+msgstr "objets laissés"
+
+#: templates/todomvc/type/angular.html:38
+msgid "All"
+msgstr "Tous"
+
+#: templates/todomvc/type/angular.html:41
+msgid "Active"
+msgstr "Actif"
+
+#: templates/todomvc/type/angular.html:44
+msgid "Complete"
+msgstr "Compléter"
+
+#: templates/todomvc/type/angular.html:47
+msgid "Clear completed"
+msgstr "Effacer terminé"

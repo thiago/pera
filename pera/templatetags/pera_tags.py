@@ -6,6 +6,10 @@ from pera import defaults
 register = template.Library()
 
 
+@register.simple_tag(name='REQUIRE_FILE')
+def require_file():
+    return '%s%s' % (settings.STATIC_URL, defaults.PERA_REQUIRE_BASE_URL)
+
 @register.simple_tag(name='components_path')
 def get_components_path(components='', base_path=''):
     rtn = []
@@ -28,7 +32,7 @@ def require_with_config(context, *args, **kwargs):
     require_path = '%s%s' % (settings.STATIC_URL, (kwargs.get('require_path', None) or defaults.PERA_REQUIRE_BASE_URL))
 
     context.update({
-        'main': kwargs.get('main', ''),
+        'main': kwargs.get('main', 'main'),
         'base_path': kwargs.get('base_path', ''),
         'components': get_components_path(kwargs.get('components', ''), kwargs.get('base_path', '')),
         'require_path': require_path,

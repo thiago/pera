@@ -3,19 +3,20 @@
 
 {% block title %}AngularJS + RequireJS • {{ block.super }}{% endblock %}
 {% block head_end %}
+    {{ block.super }}
     <style>[ng-cloak] {display: none}</style>
 {% endblock %}
 {% block body_middle %}
     <section id="todoapp" ng-controller="TodoController">
         <header id="header">
-            <h1 ng-bind="i18n.title"></h1>
+            <h1>{% trans 'todos' %}</h1>
             <form id="todo-form" ng-submit="addTodo()">
-                <input id="new-todo" placeholder="(( i18n.form.placeholder ))" ng-model="newTodo" autofocus>
+                <input id="new-todo" placeholder="{% trans 'What needs to be done?' %}" ng-model="newTodo" autofocus>
             </form>
         </header>
         <section id="main" ng-show="todos.length" ng-cloak>
             <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
-            <label for="toggle-all">(( i18n.form.all_complete ))</label>
+            <label for="toggle-all">{% trans 'Mark all as complete' %}</label>
             <ul id="todo-list">
                 <li ng-repeat="todo in todos | filter:statusFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
                     <div class="view">
@@ -31,20 +32,20 @@
         </section>
         <footer id="footer" ng-show="todos.length" ng-cloak>
 			<span id="todo-count"><strong ng-hide="remainingCount == 0">(( remainingCount )) </strong>
-				<ng-pluralize count="remainingCount" when="(( i18n.pluralize.count ))"></ng-pluralize>
+				<ng-pluralize count="remainingCount" when="{'0': '{% trans 'No items remaining' %}', one: '{% trans 'item left' %}', other: '{% trans 'items left' %}'}"></ng-pluralize>
 			</span>
             <ul id="filters">
                 <li>
-                    <a ng-class="{selected: location.path() == '/'} " href="#/" ng-bind="i18n.filter.all"></a>
+                    <a ng-class="{selected: location.path() == '/'} " href="#/">{% trans 'All' %}</a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/active'}" href="#/active" ng-bind="i18n.filter.active"></a>
+                    <a ng-class="{selected: location.path() == '/active'}" href="#/active">{% trans 'Active' %}</a>
                 </li>
                 <li>
-                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed" ng-bind="i18n.filter.completed"></a>
+                    <a ng-class="{selected: location.path() == '/completed'}" href="#/completed">{% trans 'Complete' %}</a>
                 </li>
             </ul>
-            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length" ng-bind="i18n.action.clear + ' (' + (todos.length - remainingCount) + ')'" ></button>
+            <button id="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length" >{% trans 'Clear completed' %} <span ng-bind="'(' + (todos.length - remainingCount) + ')'"></span></button>
         </footer>
     </section>
 {% endblock %}

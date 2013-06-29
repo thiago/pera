@@ -2,6 +2,14 @@
 {% load pera_tags i18n %}
 
 {% block title %}TodoMVC • Django{% endblock %}
+{% block body_id %}todomvc{% endblock %}
+{% block head_meta %}
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}todomvc/common/touch-icon-iphone.png">
+    <link rel="apple-touch-icon" href="{{ STATIC_URL }}todomvc/common/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}todomvc/common/touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}todomvc/common/touch-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ STATIC_URL }}todomvc/common/touch-icon-ipad-retina.png" />
+{% endblock %}
 {% block css_uncompress %}
     <link rel="stylesheet" href="{{ STATIC_URL }}components/todomvc-common/base.css">
 {% endblock %}
@@ -19,11 +27,10 @@
         <input type="submit" value="{% trans 'Go' %}" />
     </form>
 {% endblock %}
-{% block body_middle %}{% endblock %}
 {% block body_end %}
     <footer id="info">
         <p>{% trans 'Double-click to edit a todo' %}</p>
-        <p>Written by <a href="http://addyosmani.github.com/todomvc/">Addy Osmani</a></p>
+        <p>{% trans 'Written by' %} <a href="http://addyosmani.github.com/todomvc/">Addy Osmani</a></p>
         <p>{% trans 'Part of' %} <a href="http://todomvc.com">TodoMVC</a></p>
         <p>{% trans 'Integrated with Django by' %} <a href="http://github.com/trsouz/pera">Pera project</a></p>
     </footer>

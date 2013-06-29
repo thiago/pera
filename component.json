@@ -2,36 +2,17 @@
   "name": "pera",
   "version": "0.0.0",
   "dependencies": {
-	  /*
-	   "angular-cookies": "latest",
-	   "angular-resource": "latest",
-	   "angular-sanitize": "latest",
-	   "angular-ui": "latest",
-	   "backbone": "latest",
-	   "backbone-forms": "latest",
-	   "backbone.paginator": "latest",
-	   "backbone-tastypie": "latest",
-	   "backbone.iobind": "latest",
-	   "bootstrap": "latest",
-	   "es5-shim": "latest",
-	   "fancybox": "latest",
-	   "jquery-ui": "latest",
-	   "json3": "latest",
-	   "layoutmanager": "latest",
-	   "lodash": "latest",
-	   "moment": "latest",
-	   "requirejs-domready": "~2.0.1",
-	   "select2": "latest"
-	   */
 	  "angular": "~1.0.5",
 	  "backbone": "~0.9.10",
-	  "underscore": "~1.4.4",
-	  "jquery": "~1.9.1",
 	  "backbone.localStorage": "~1.1.0",
+	  "carouFredSel": "https://github.com/gilbitron/carouFredSel.git",
+	  "fancybox": "~2.1.4",
+	  "jquery": "~1.9.1",
 	  "requirejs": "~2.1.5",
 	  "requirejs-i18n": "~2.0.2",
 	  "requirejs-text": "~2.0.5",
 	  "todomvc-common": "~0.1.4",
-	  "tinymce": "https://github.com/trsouz/tinymce.git"
+	  "tinymce": "https://github.com/trsouz/tinymce.git",
+	  "underscore": "~1.4.4"
   }
 }
